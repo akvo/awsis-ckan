@@ -1,0 +1,127 @@
+volumes:
+  ckan_storage:
+  pg_data:
+  solr_data:
+  pip_cache:
+  site_packages:
+  traefik-certificates:
+
+services:
+  traefik:
+    image: traefik:v3.0
+    env_file:
+      - .env
+    restart: unless-stopped
+    environment:
+      - TRAEFIK_PROVIDERS_FILE_FILENAME=/traefik-config/dynamic.yml
+      - TRAEFIK_PROVIDERS_FILE_WATCH=true
+      - TRAEFIK_ENTRYPOINTS_WEB_ADDRESS=:80
+      - TRAEFIK_ENTRYPOINTS_WEBSECURE_ADDRESS=:443
+      - TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_STORAGE=/letsencrypt/acme.json
+      - TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_TLSCHALLENGE=true
+      - TRAEFIK_LOG_LEVEL=DEBUG
+      - TRAEFIK_LOG=true
+      - TRAEFIK_LOG_FORMAT=common
+      - TRAEFIK_ACCESSLOG=false
+      - TRAEFIK_ACCESSLOG_FILEPATH=/var/log/traefik/access.log
+      - TRAEFIK_ACCESSLOG_FORMAT=common
+    entrypoint: ["sh", "-c", "/generate_dynamic_config.sh && traefik"]
+    volumes:
+      - "traefik-certificates:/letsencrypt"
+      - "./traefik/generate_dynamic_config.sh:/generate_dynamic_config.sh:ro"
+      - "/traefik-config"
+    networks:
+      - webnet
+      - ckannet
+    ports:
+      - "0.0.0.0:${NGINX_SSLPORT_HOST}:${NGINX_SSLPORT}"
+      - "0.0.0.0:${NGINX_PORT_HOST}:${NGINX_PORT}"
+
+  ckan:
+    build:
+      context: ckan/
+      dockerfile: Dockerfile
+      args:
+        - TZ=${TZ}
+    networks:
+      - ckannet
+      - dbnet
+      - solrnet
+      - redisnet
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      solr:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ckan_storage:/var/lib/ckan
+      - pip_cache:/root/.cache/pip
+      - site_packages:/usr/lib/python3.10/site-packages
+      - ./src:/srv/app/src_extensions
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "-qO",
+          "/dev/null",
+          "http://ckan:5000/api/action/status_show",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 6
+
+  db:
+    build:
+      context: postgresql/
+    networks:
+      - dbnet
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - CKAN_DB_USER
+      - CKAN_DB_PASSWORD
+      - CKAN_DB
+      - DATASTORE_READONLY_USER
+      - DATASTORE_READONLY_PASSWORD
+      - DATASTORE_DB
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+        ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
+
+  solr:
+    networks:
+      - solrnet
+    image: ckan/ckan-solr:${SOLR_IMAGE_VERSION}
+    volumes:
+      - solr_data:/var/solr
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:8983/solr/"]
+
+  redis:
+    image: redis:${REDIS_VERSION}
+    networks:
+      - redisnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "-e", "QUIT"]
+
+networks:
+  webnet:
+  ckannet:
+  solrnet:
+    internal: true
+  dbnet:
+    internal: true
+  redisnet:
+    internal: true
