@@ -1,20 +1,14 @@
-# AKVO-CKAN
+# AWSIS-CKAN
 
-Test Site: https://akvo-ckan.akvotest.org
+Test Site: https://awsis.akvotest.org
 
 ## Prerequisite
-To run AKVO-CKAN, ensure that the following dependencies are installed on your system:
+To run AWSIS-CKAN, ensure that the following dependencies are installed on your system:
 
 - Docker > v19
 - Docker Compose > v2.1
 
 These tools will allow you to run the application within isolated containers, ensuring a consistent development and production environment.
-
-## Documentations
-
-- User Guide: https://akvo-ckan.readthedocs.io/en/latest/user-guide.html
-- SysAdmin Guide: https://akvo-ckan.readthedocs.io/en/latest/sysadmin-guide.html
-- API Guide: https://akvo-ckan.readthedocs.io/en/latest/api/index.html
 
 ## Development
 <details>
@@ -37,7 +31,7 @@ For the first-time setup, you may need to build the Docker images before running
 docker compose -f docker-compose.dev.yml up -d --build
 ```
 
-This command builds and starts the necessary containers for AKVO-CKAN, including CKAN-dev, PostgreSQL, Redis, Solr, and other dependencies required for AKVO-CKAN to function in development mode.
+This command builds and starts the necessary containers for AWSIS-CKAN, including CKAN-dev, PostgreSQL, Redis, Solr, and other dependencies required for AWSIS-CKAN to function in development mode.
 
 </details>
 <details>
@@ -51,12 +45,12 @@ docker compose -f docker-compose.dev.yml ps
 
 ```bash
 NAME                    IMAGE                              COMMAND                  SERVICE             CREATED             STATUS                 PORTS
-akvo-ckan-ckan-dev-1     akvo-ckan-ckan-dev                  "/srv/app/start_ckan…"   ckan-dev            3 hours ago         Up 3 hours (healthy)   0.0.0.0:5000->5000/tcp
-akvo-ckan-datapusher-1   ckan/ckan-base-datapusher:0.0.20   "sh -c 'uwsgi --plug…"   datapusher          3 hours ago         Up 3 hours (healthy)   8800/tcp
-akvo-ckan-db-1           akvo-ckan-db                        "docker-entrypoint.s…"   db                  3 hours ago         Up 3 hours (healthy)   5432/tcp
-akvo-ckan-pgadmin-1      dpage/pgadmin4:5.7                 "/entrypoint.sh"         pgadmin             3 hours ago         Up 3 hours             80/tcp, 443/tcp, 0.0.0.0:5050->5050/tcp, :::5050->5050/tcp
-akvo-ckan-redis-1        redis:6                            "docker-entrypoint.s…"   redis               3 hours ago         Up 3 hours (healthy)   6379/tcp
-akvo-ckan-solr-1         ckan/ckan-solr:2.9-solr8           "docker-entrypoint.s…"   solr                3 hours ago         Up 3 hours (healthy)   0.0.0.0:8983->8983/tcp, :::8983->8983/tcp
+awsis-ckan-ckan-dev-1     awsis-ckan-ckan-dev                  "/srv/app/start_ckan…"   ckan-dev            3 hours ago         Up 3 hours (healthy)   0.0.0.0:5000->5000/tcp
+awsis-ckan-datapusher-1   ckan/ckan-base-datapusher:0.0.20   "sh -c 'uwsgi --plug…"   datapusher          3 hours ago         Up 3 hours (healthy)   8800/tcp
+awsis-ckan-db-1           awsis-ckan-db                        "docker-entrypoint.s…"   db                  3 hours ago         Up 3 hours (healthy)   5432/tcp
+awsis-ckan-pgadmin-1      dpage/pgadmin4:5.7                 "/entrypoint.sh"         pgadmin             3 hours ago         Up 3 hours             80/tcp, 443/tcp, 0.0.0.0:5050->5050/tcp, :::5050->5050/tcp
+awsis-ckan-redis-1        redis:6                            "docker-entrypoint.s…"   redis               3 hours ago         Up 3 hours (healthy)   6379/tcp
+awsis-ckan-solr-1         ckan/ckan-solr:2.9-solr8           "docker-entrypoint.s…"   solr                3 hours ago         Up 3 hours (healthy)   0.0.0.0:8983->8983/tcp, :::8983->8983/tcp
 ```
 
 </details>
@@ -79,7 +73,7 @@ docker compose -f docker-compose.dev.yml logs --follow ckan-dev
 <details>
 <summary>Command Line Interface</summary>
 
-To interact with the AKVO-CKAN application via the command line, you can execute CKAN commands inside the running container:
+To interact with the AWSIS-CKAN application via the command line, you can execute CKAN commands inside the running container:
 
 ```bash
 docker compose -f docker-compose.dev.yml exec ckan-dev ckan
@@ -158,7 +152,7 @@ This command will gracefully restart all running services while maintaining thei
 Copying and License
 -------------------
 
-AKVO-CKAN is open-source software, licensed under the GNU Affero General Public License (AGPL) v3.0. The full license text can be found at:
+AWSIS-CKAN is open-source software, licensed under the GNU Affero General Public License (AGPL) v3.0. The full license text can be found at:
 
 [AGPL v3.0 License](http://www.fsf.org/licensing/licenses/agpl-3.0.html)
 
