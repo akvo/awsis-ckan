@@ -3,7 +3,7 @@ name: Deploy CKAN to test environment
 on:
   push:
     branches:
-      - master
+      - main
 
 concurrency:
   group: test
