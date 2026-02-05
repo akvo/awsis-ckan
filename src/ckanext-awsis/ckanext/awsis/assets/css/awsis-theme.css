@@ -96,15 +96,40 @@ a:hover {
 }
 
 .awsis-navbar .awsis-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+}
+
+.awsis-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--awsis-primary);
+  transition: color 0.2s ease;
+}
+
+.awsis-logo-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.awsis-logo-text {
   font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--awsis-dark) !important;
+  color: var(--awsis-dark);
   letter-spacing: -0.02em;
+  transition: color 0.2s ease;
 }
 
-.awsis-navbar .awsis-logo:hover {
-  color: var(--awsis-primary) !important;
+.awsis-navbar .awsis-logo:hover .awsis-logo-icon {
+  color: var(--awsis-primary-dark);
+}
+
+.awsis-navbar .awsis-logo:hover .awsis-logo-text {
+  color: var(--awsis-primary);
 }
 
 .awsis-navbar .navbar-menu {
@@ -351,9 +376,16 @@ a:hover {
 
 .awsis-hero-subtitle {
   font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 0.5rem;
   line-height: 1.6;
+}
+
+.awsis-hero-tagline {
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+  letter-spacing: 0.02em;
 }
 
 .awsis-hero-search {
@@ -363,6 +395,7 @@ a:hover {
 
 .awsis-hero-search .field {
   display: flex;
+  align-items: stretch;
   background: var(--awsis-white);
   border-radius: 0;
   overflow: hidden;
@@ -376,6 +409,7 @@ a:hover {
   padding: 1rem 1.5rem;
   flex: 1;
   border-radius: 0;
+  height: auto;
 }
 
 .awsis-hero-search input:focus {
@@ -387,11 +421,15 @@ a:hover {
   background: var(--awsis-primary);
   color: var(--awsis-white);
   border: none;
-  padding: 1rem 2rem;
+  padding: 0 2rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s ease;
   border-radius: 0;
+  height: auto;
+  display: flex;
+  align-items: center;
 }
 
 .awsis-hero-search button:hover {
@@ -829,6 +867,17 @@ body {
   box-shadow: none;
 }
 
+.row.wrapper {
+  border: none !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+@media (min-width: 768px) {
+  .wrapper::before {
+    display: none;
+  }
+}
+
 /* Remove box shadows */
 .box,
 .module,
@@ -932,6 +981,11 @@ main.main,
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 2px solid var(--awsis-gray-200);
+  background: transparent !important;
+}
+
+.nav-tabs {
+  border-bottom: 0;
 }
 
 .page-header h1,
@@ -954,6 +1008,17 @@ main.main,
 /* Primary content area */
 .primary {
   background: transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+.primary > .module:last-child:has(small) {
+  margin-top: auto;
+  padding-top: 2rem;
+}
+
+.primary > .module:last-child small {
+  color: var(--awsis-gray-500);
 }
 
 /* Secondary/Sidebar */
@@ -1694,62 +1759,136 @@ a.btn-info:active {
   padding-left: 2rem;
 }
 
-.secondary .module-narrow {
+/* Filters container */
+.filters {
   background: var(--awsis-white);
-  border: 1px solid var(--awsis-gray-200);
-  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
+/* Filter section modules */
+.filters .module-narrow,
+.secondary .module-narrow {
+  background: var(--awsis-white);
+  border: none;
+  border-bottom: 1px solid var(--awsis-gray-200);
+  margin-bottom: 0;
+}
+
+.filters .module-narrow:last-of-type {
+  border-bottom: none;
+}
+
+.filters .module-narrow .module-heading,
 .secondary .module-narrow .module-heading {
-  background: var(--awsis-gray-50);
-  padding: 0.875rem 1rem;
+  background: transparent;
+  padding: 1rem 1rem 0.5rem;
   margin: 0;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--awsis-gray-600);
-  border-bottom: 1px solid var(--awsis-gray-200);
+  border-bottom: none;
 }
 
+.filters .module-narrow .module-heading i,
 .secondary .module-narrow .module-heading i {
   margin-right: 0.5rem;
   color: var(--awsis-primary);
 }
 
+/* Filter navigation items */
+.filters .nav-facet,
 .secondary .nav-simple {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+.filters .nav-facet .nav-item,
 .secondary .nav-simple .nav-item {
-  border-bottom: 1px solid var(--awsis-gray-100);
-}
-
-.secondary .nav-simple .nav-item:last-child {
   border-bottom: none;
 }
 
+.filters .nav-facet .nav-item a,
 .secondary .nav-simple .nav-item a {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1rem;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
   color: var(--awsis-gray-700);
   text-decoration: none;
   font-size: 0.875rem;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
+.filters .nav-facet .nav-item a:hover,
 .secondary .nav-simple .nav-item a:hover {
   background: var(--awsis-gray-50);
   color: var(--awsis-primary);
 }
 
+.filters .nav-facet .nav-item.active a,
 .secondary .nav-simple .nav-item.active a {
   background: var(--awsis-primary);
   color: var(--awsis-white);
   font-weight: 500;
+}
+
+/* Item label and count */
+.filters .nav-facet .item-label {
+  flex: 1;
+}
+
+.filters .nav-facet .hidden.separator,
+.nav-facet .hidden.separator {
+  display: none;
+}
+
+.filters .nav-facet .item-count.badge,
+.filters .nav-facet span.item-count,
+.secondary .nav-facet .item-count.badge {
+  background: var(--awsis-gray-200) !important;
+  color: var(--awsis-gray-600) !important;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  margin-left: 0.5rem;
+  border-radius: 0;
+  line-height: 1.2;
+}
+
+.filters .nav-facet .nav-item.active a .item-count.badge,
+.filters .nav-facet .nav-item.active a span.item-count {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: var(--awsis-white) !important;
+}
+
+/* Empty state for filters */
+.filters .module-content.empty,
+.secondary .module-content.empty {
+  padding: 0.5rem 1rem 1rem;
+  font-size: 0.8125rem;
+  color: var(--awsis-gray-400);
+  background: transparent;
+  border: none;
+}
+
+/* Module footer */
+.filters .module-footer {
+  padding: 0.5rem 1rem 1rem;
+  margin: 0;
+  border: none;
+  background: transparent;
+}
+
+.filters .module-footer:empty {
+  display: none;
+}
+
+/* Close button for mobile filters */
+.filters .close.hide-filters {
+  display: none;
 }
 
 .module-narrow .nav-item.active > a::before,
@@ -1788,6 +1927,30 @@ a.btn-info:active {
   margin-right: 0.5rem;
 }
 
+/* Standalone secondary modules (outside filters) */
+.secondary > .module-narrow {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.secondary > .module-narrow .module-heading {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--awsis-gray-200);
+}
+
+.secondary > .module-narrow .nav-simple .nav-item {
+  border-bottom: 1px solid var(--awsis-gray-100);
+}
+
+.secondary > .module-narrow .nav-simple .nav-item:last-child {
+  border-bottom: none;
+}
+
+/* Resources section */
+.resources h2 {
+  margin-bottom: 1rem;
+}
+
 /* Dataset resource badges */
 .badge-default,
 .badge.badge-default,
@@ -1810,4 +1973,826 @@ a.badge[data-format]:hover {
   background: #2d3748 !important;
   color: #ffffff !important;
   text-decoration: none;
+}
+
+/* ============================================
+   About Page Styles
+   ============================================ */
+
+.awsis-about-page {
+  padding-top: 0;
+}
+
+/* About Hero */
+.awsis-about-hero {
+  position: relative;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-top: -70px;
+  padding-top: 70px;
+}
+
+.awsis-about-hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.awsis-about-hero-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.awsis-about-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(26, 58, 58, 0.9) 0%, rgba(30, 95, 116, 0.85) 100%);
+}
+
+.awsis-about-hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 800px;
+  padding: 4rem 2rem;
+}
+
+.awsis-about-hero-title {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--awsis-white);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.awsis-about-hero-subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* About Label */
+.awsis-about-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--awsis-primary);
+  background: var(--awsis-light);
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.awsis-about-section-title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--awsis-dark);
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+/* Mission Section */
+.awsis-about-mission {
+  padding: 6rem 0;
+  background: var(--awsis-white);
+}
+
+.awsis-about-mission-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.awsis-about-mission-content p {
+  color: var(--awsis-gray-600);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+
+.awsis-about-mission-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.awsis-about-mission-card {
+  background: linear-gradient(135deg, var(--awsis-secondary) 0%, var(--awsis-secondary-dark) 100%);
+  padding: 2.5rem;
+  max-width: 400px;
+  position: relative;
+}
+
+.awsis-about-mission-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.awsis-about-mission-icon svg {
+  width: 36px;
+  height: 36px;
+  color: var(--awsis-white);
+}
+
+.awsis-about-mission-card blockquote {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--awsis-white);
+  line-height: 1.7;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* Vision Section */
+.awsis-about-vision {
+  padding: 5rem 0;
+  background: var(--awsis-gray-50);
+}
+
+.awsis-about-vision-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.awsis-about-vision-text {
+  font-size: 1.25rem;
+  color: var(--awsis-gray-700);
+  line-height: 1.8;
+}
+
+/* Objectives Section */
+.awsis-about-objectives {
+  padding: 6rem 0;
+  background: var(--awsis-white);
+}
+
+.awsis-about-objectives-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.awsis-about-objective-card {
+  background: var(--awsis-white);
+  border: 1px solid var(--awsis-gray-200);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.awsis-about-objective-card:hover {
+  border-color: var(--awsis-primary);
+  box-shadow: 0 8px 24px rgba(3, 173, 140, 0.1);
+  transform: translateY(-4px);
+}
+
+.awsis-about-objective-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--awsis-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.awsis-about-objective-icon svg {
+  width: 28px;
+  height: 28px;
+  color: var(--awsis-primary);
+}
+
+.awsis-about-objective-title {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--awsis-dark);
+  margin-bottom: 0.75rem;
+}
+
+.awsis-about-objective-description {
+  font-size: 0.9375rem;
+  color: var(--awsis-gray-600);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* About Stats Section */
+.awsis-about-stats {
+  padding: 5rem 0;
+  background: var(--awsis-secondary);
+}
+
+.awsis-about-stats .awsis-section-title,
+.awsis-about-stats .awsis-section-subtitle {
+  color: var(--awsis-white);
+}
+
+.awsis-about-stats .awsis-section-subtitle {
+  opacity: 0.85;
+}
+
+.awsis-about-stats .awsis-stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 2rem;
+}
+
+.awsis-about-stats .awsis-stat-icon svg {
+  color: var(--awsis-white);
+}
+
+.awsis-about-stats .awsis-stat-number {
+  color: var(--awsis-white);
+}
+
+.awsis-about-stats .awsis-stat-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Focus Section */
+.awsis-about-focus {
+  padding: 6rem 0;
+  background: var(--awsis-white);
+}
+
+.awsis-about-focus-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.awsis-about-focus-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.awsis-about-focus-image img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.awsis-about-focus-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(3, 173, 140, 0.2) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.awsis-about-focus-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.awsis-about-focus-item {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.awsis-about-focus-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--awsis-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.awsis-about-focus-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--awsis-primary);
+}
+
+.awsis-about-focus-item h4 {
+  font-family: var(--font-heading);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--awsis-dark);
+  margin: 0 0 0.5rem 0;
+}
+
+.awsis-about-focus-item p {
+  font-size: 0.9375rem;
+  color: var(--awsis-gray-600);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* CTA Section */
+.awsis-about-cta {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, var(--awsis-dark) 0%, var(--awsis-secondary-dark) 100%);
+}
+
+.awsis-about-cta-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.awsis-about-cta-title {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--awsis-white);
+  margin-bottom: 1rem;
+}
+
+.awsis-about-cta-text {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.awsis-about-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.awsis-about-cta-buttons .button {
+  padding: 1rem 2rem;
+  font-weight: 600;
+  border-radius: 0;
+}
+
+.awsis-about-cta-buttons .button.is-primary {
+  background: var(--awsis-primary);
+  border-color: var(--awsis-primary);
+  color: var(--awsis-white);
+}
+
+.awsis-about-cta-buttons .button.is-primary:hover {
+  background: var(--awsis-primary-dark);
+  border-color: var(--awsis-primary-dark);
+}
+
+.awsis-about-cta-buttons .button.is-outlined {
+  border: 2px solid var(--awsis-white);
+  color: var(--awsis-white);
+  background: transparent;
+}
+
+.awsis-about-cta-buttons .button.is-outlined:hover {
+  background: var(--awsis-white);
+  color: var(--awsis-primary);
+}
+
+/* About Page Responsive */
+@media screen and (max-width: 1024px) {
+  .awsis-about-hero-title {
+    font-size: 2.5rem;
+  }
+
+  .awsis-about-mission-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .awsis-about-objectives-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .awsis-about-focus-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .awsis-about-focus-image {
+    order: -1;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .awsis-about-hero {
+    min-height: 40vh;
+  }
+
+  .awsis-about-hero-title {
+    font-size: 2rem;
+  }
+
+  .awsis-about-hero-subtitle {
+    font-size: 1.0625rem;
+  }
+
+  .awsis-about-hero-content {
+    padding: 3rem 1.5rem;
+  }
+
+  .awsis-about-mission,
+  .awsis-about-objectives,
+  .awsis-about-focus,
+  .awsis-about-cta {
+    padding: 4rem 0;
+  }
+
+  .awsis-about-vision,
+  .awsis-about-stats,
+  .awsis-about-partners {
+    padding: 3rem 0;
+  }
+
+  .awsis-about-section-title {
+    font-size: 1.75rem;
+  }
+
+  .awsis-about-objectives-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .awsis-about-cta-title {
+    font-size: 1.875rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .awsis-about-hero-content {
+    padding: 2rem 1rem;
+  }
+
+  .awsis-about-mission-card {
+    padding: 1.5rem;
+  }
+
+  .awsis-about-objective-card {
+    padding: 1.5rem;
+  }
+
+  .awsis-about-focus-image img {
+    height: 280px;
+  }
+
+  .awsis-about-cta-buttons {
+    flex-direction: column;
+  }
+
+  .awsis-about-cta-buttons .button {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   Error Page Styles (404, 403, 500, etc.)
+   ============================================ */
+
+.awsis-error-page {
+  padding-top: 0;
+  min-height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+}
+
+.awsis-error-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(180deg, var(--awsis-gray-50) 0%, var(--awsis-white) 100%);
+}
+
+.awsis-error-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Error Code Display */
+.awsis-error-code-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+
+.awsis-error-code {
+  font-family: var(--font-heading);
+  font-size: 8rem;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--awsis-primary) 0%, var(--awsis-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.awsis-error-decoration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 180px;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.awsis-error-decoration svg {
+  width: 100%;
+  height: 100%;
+  color: var(--awsis-dark);
+}
+
+/* Error Message */
+.awsis-error-message {
+  margin-bottom: 2.5rem;
+}
+
+.awsis-error-title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--awsis-dark);
+  margin: 0 0 1rem 0;
+}
+
+.awsis-error-description {
+  font-size: 1.0625rem;
+  color: var(--awsis-gray-600);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Search Box */
+.awsis-error-search {
+  margin-bottom: 2.5rem;
+}
+
+.awsis-error-search-field {
+  display: flex;
+  align-items: center;
+  background: var(--awsis-white);
+  border: 2px solid var(--awsis-gray-200);
+  transition: border-color 0.2s ease;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.awsis-error-search-field:focus-within {
+  border-color: var(--awsis-primary);
+}
+
+.awsis-error-search-field svg {
+  width: 20px;
+  height: 20px;
+  color: var(--awsis-gray-400);
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+.awsis-error-search-field input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  color: var(--awsis-dark);
+}
+
+.awsis-error-search-field input::placeholder {
+  color: var(--awsis-gray-400);
+}
+
+.awsis-error-search-field input:focus {
+  outline: none;
+}
+
+.awsis-error-search-field button {
+  background: var(--awsis-primary);
+  color: var(--awsis-white);
+  border: none;
+  padding: 0.875rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.awsis-error-search-field button:hover {
+  background: var(--awsis-primary-dark);
+}
+
+/* Quick Links */
+.awsis-error-links {
+  margin-bottom: 2rem;
+}
+
+.awsis-error-links-label {
+  font-size: 0.875rem;
+  color: var(--awsis-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+
+.awsis-error-links-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.awsis-error-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--awsis-white);
+  border: 1px solid var(--awsis-gray-200);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  min-width: 100px;
+}
+
+.awsis-error-link:hover {
+  border-color: var(--awsis-primary);
+  box-shadow: 0 4px 12px rgba(3, 173, 140, 0.1);
+  transform: translateY(-2px);
+}
+
+.awsis-error-link-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--awsis-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.awsis-error-link:hover .awsis-error-link-icon {
+  background: var(--awsis-primary);
+}
+
+.awsis-error-link-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--awsis-primary);
+  transition: color 0.2s ease;
+}
+
+.awsis-error-link:hover .awsis-error-link-icon svg {
+  color: var(--awsis-white);
+}
+
+.awsis-error-link span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--awsis-gray-700);
+  transition: color 0.2s ease;
+}
+
+.awsis-error-link:hover span {
+  color: var(--awsis-primary);
+}
+
+/* Login Redirect */
+.awsis-error-login {
+  padding: 1.25rem;
+  background: var(--awsis-light);
+  border-left: 3px solid var(--awsis-primary);
+}
+
+.awsis-error-login p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--awsis-gray-700);
+  flex-wrap: wrap;
+}
+
+.awsis-error-login svg {
+  width: 18px;
+  height: 18px;
+  color: var(--awsis-primary);
+  flex-shrink: 0;
+}
+
+.awsis-error-login a {
+  color: var(--awsis-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.awsis-error-login a:hover {
+  color: var(--awsis-primary-dark);
+  text-decoration: underline;
+}
+
+/* Error Page Responsive */
+@media screen and (max-width: 768px) {
+  .awsis-error-section {
+    padding: 3rem 1.5rem;
+  }
+
+  .awsis-error-code {
+    font-size: 6rem;
+  }
+
+  .awsis-error-decoration {
+    width: 140px;
+    height: 140px;
+  }
+
+  .awsis-error-title {
+    font-size: 1.75rem;
+  }
+
+  .awsis-error-description {
+    font-size: 1rem;
+  }
+
+  .awsis-error-links-grid {
+    gap: 0.75rem;
+  }
+
+  .awsis-error-link {
+    padding: 1rem 1.25rem;
+    min-width: 90px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .awsis-error-section {
+    padding: 2rem 1rem;
+  }
+
+  .awsis-error-code {
+    font-size: 5rem;
+  }
+
+  .awsis-error-decoration {
+    width: 120px;
+    height: 120px;
+  }
+
+  .awsis-error-title {
+    font-size: 1.5rem;
+  }
+
+  .awsis-error-search-field {
+    flex-wrap: wrap;
+  }
+
+  .awsis-error-search-field svg {
+    display: none;
+  }
+
+  .awsis-error-search-field input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+
+  .awsis-error-search-field button {
+    width: 100%;
+  }
+
+  .awsis-error-links-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .awsis-error-link {
+    min-width: 0;
+  }
 }

@@ -1,0 +1,131 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ gettext('Error %(error_code)s', error_code=code) }}{% endblock %}
+
+{% block maintag %}
+<div class="awsis-error-page" role="main">
+{% endblock %}
+
+{% block toolbar %}{% endblock %}
+
+{% block content %}
+<section class="awsis-error-section">
+  <div class="container">
+    <div class="awsis-error-content">
+      {# Error Code Display #}
+      <div class="awsis-error-code-wrapper" data-aos="fade-up">
+        <span class="awsis-error-code">{{ code }}</span>
+        <div class="awsis-error-decoration">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 8v4M12 16h.01"></path>
+          </svg>
+        </div>
+      </div>
+
+      {# Error Message #}
+      <div class="awsis-error-message" data-aos="fade-up" data-aos-delay="100">
+        {% if code == 404 %}
+          <h1 class="awsis-error-title">Page Not Found</h1>
+          <p class="awsis-error-description">
+            The page you're looking for doesn't exist or has been moved.
+            Don't worry, let's help you find what you need.
+          </p>
+        {% elif code == 403 %}
+          <h1 class="awsis-error-title">Access Denied</h1>
+          <p class="awsis-error-description">
+            You don't have permission to access this resource.
+            Please check your credentials or contact an administrator.
+          </p>
+        {% elif code == 500 %}
+          <h1 class="awsis-error-title">Server Error</h1>
+          <p class="awsis-error-description">
+            Something went wrong on our end. We're working to fix it.
+            Please try again later.
+          </p>
+        {% else %}
+          <h1 class="awsis-error-title">{{ name if name else 'Error' }}</h1>
+          <p class="awsis-error-description">
+            {{ content if content else 'An unexpected error occurred.' }}
+          </p>
+        {% endif %}
+      </div>
+
+      {# Search Box #}
+      <div class="awsis-error-search" data-aos="fade-up" data-aos-delay="200">
+        <form action="{{ h.url_for('dataset.search') }}" method="get">
+          <div class="awsis-error-search-field">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" name="q" placeholder="Search for datasets..." aria-label="Search datasets">
+            <button type="submit">Search</button>
+          </div>
+        </form>
+      </div>
+
+      {# Quick Links #}
+      <div class="awsis-error-links" data-aos="fade-up" data-aos-delay="300">
+        <p class="awsis-error-links-label">Or try one of these:</p>
+        <div class="awsis-error-links-grid">
+          <a href="{{ h.url_for('home.index') }}" class="awsis-error-link">
+            <div class="awsis-error-link-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+              </svg>
+            </div>
+            <span>Homepage</span>
+          </a>
+          <a href="{{ h.url_for('dataset.search') }}" class="awsis-error-link">
+            <div class="awsis-error-link-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+              </svg>
+            </div>
+            <span>Datasets</span>
+          </a>
+          <a href="{{ h.url_for('organization.index') }}" class="awsis-error-link">
+            <div class="awsis-error-link-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <span>Organizations</span>
+          </a>
+          <a href="{{ h.url_for('home.about') }}" class="awsis-error-link">
+            <div class="awsis-error-link-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+              </svg>
+            </div>
+            <span>About</span>
+          </a>
+        </div>
+      </div>
+
+      {# Login Redirect (if applicable) #}
+      {% if show_login_redirect_link %}
+      <div class="awsis-error-login" data-aos="fade-up" data-aos-delay="400">
+        <p>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+          </svg>
+          {{ _("You might need to login to access this page.") }}
+          <a href="{{ h.url_for('user.login') }}">{{ _("Click here to login") }}</a>
+        </p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block primary %}{% endblock %}
+{% block secondary %}{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block flash %}
+  {# eat the flash messages caused by errors #}
+  {% set flash_messages = h.get_flashed_messages() %}
+{% endblock %}
