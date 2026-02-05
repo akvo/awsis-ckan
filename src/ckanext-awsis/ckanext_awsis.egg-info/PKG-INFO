@@ -1,0 +1,18 @@
+Metadata-Version: 2.1
+Name: ckanext-awsis
+Version: 1.0.0
+Summary: AWSIS (Akvo Water Security Information System) theme for CKAN
+Home-page: https://github.com/akvo/awsis-ckan
+Author: Akvo
+Author-email: tech.consultancy@akvo.org
+License: AGPL-3.0
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: GNU Affero General Public License v3
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+
+A sophisticated CKAN theme extension for the AWSIS project focusing on water management in the Sundarbans region.
+

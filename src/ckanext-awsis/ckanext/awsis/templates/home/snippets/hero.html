@@ -1,0 +1,35 @@
+<section class="awsis-hero">
+  <div class="awsis-hero-background">
+    <img src="/images/hero-sundarbans.jpg" alt="Sundarbans waterways" loading="eager">
+  </div>
+  <div class="awsis-hero-overlay"></div>
+
+  <div class="awsis-hero-content" data-aos="fade-up" data-aos-duration="800">
+    <h1 class="awsis-hero-title">
+      Water Security Information System
+    </h1>
+    <p class="awsis-hero-subtitle">
+      Open data platform for sustainable water management, empowering communities
+      and decision-makers with actionable insights.
+    </p>
+
+    <form class="awsis-hero-search" action="{{ h.url_for('dataset.search') }}" method="get">
+      <div class="field">
+        <input class="input" type="text" name="q" placeholder="Search datasets, organizations, or topics..."
+               aria-label="Search datasets">
+        <button class="button" type="submit">
+          Search
+        </button>
+      </div>
+    </form>
+
+    <div class="awsis-hero-cta">
+      <a href="{{ h.url_for('dataset.search') }}" class="button is-primary is-medium">
+        Explore Data
+      </a>
+      <a href="{{ h.url_for('home.about') }}" class="button is-outlined is-medium">
+        Learn More
+      </a>
+    </div>
+  </div>
+</section>

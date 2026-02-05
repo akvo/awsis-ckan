@@ -1,0 +1,88 @@
+{% set featured_datasets = h.awsis_get_featured_datasets(6) %}
+
+<section class="awsis-featured">
+  <div class="container">
+    <div class="awsis-section-header" data-aos="fade-up">
+      <h2 class="awsis-section-title">Featured Datasets</h2>
+      <p class="awsis-section-subtitle">
+        Discover the latest data contributions from our community
+      </p>
+    </div>
+
+    {% if featured_datasets %}
+    <div class="awsis-featured-carousel" data-aos="fade-up">
+      <div class="swiper awsis-swiper">
+        <div class="swiper-wrapper">
+          {% for dataset in featured_datasets %}
+          <div class="swiper-slide">
+            <article class="awsis-dataset-card">
+              <div class="awsis-dataset-card-header">
+                <div class="awsis-dataset-card-org">
+                  {% if dataset.organization %}
+                    {{ dataset.organization.title }}
+                  {% else %}
+                    AWSIS
+                  {% endif %}
+                </div>
+                <h3 class="awsis-dataset-card-title">
+                  {{ h.truncate(dataset.title, 60) }}
+                </h3>
+              </div>
+              <div class="awsis-dataset-card-body">
+                <p class="awsis-dataset-card-description">
+                  {{ h.truncate(dataset.notes or 'No description available.', 120) }}
+                </p>
+                <div class="awsis-dataset-card-meta">
+                  <span class="awsis-dataset-card-meta-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    {{ dataset.num_resources }} resource{{ 's' if dataset.num_resources != 1 else '' }}
+                  </span>
+                  <span class="awsis-dataset-card-meta-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {{ h.render_datetime(dataset.metadata_modified, date_format='%b %d, %Y') }}
+                  </span>
+                </div>
+              </div>
+              <div class="awsis-dataset-card-footer">
+                <a href="{{ h.url_for('dataset.read', id=dataset.name) }}" class="awsis-dataset-card-link">
+                  View dataset
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
+
+        <!-- Navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </div>
+    {% else %}
+    <div class="has-text-centered" data-aos="fade-up">
+      <p style="color: var(--awsis-gray-600); margin-bottom: var(--space-6);">
+        No datasets available yet. Be the first to contribute!
+      </p>
+      <a href="{{ h.url_for('dataset.new') }}" class="button is-primary">
+        Add a Dataset
+      </a>
+    </div>
+    {% endif %}
+
+    <div class="has-text-centered mt-8" data-aos="fade-up">
+      <a href="{{ h.url_for('dataset.search') }}" class="button is-outlined is-primary">
+        View All Datasets
+      </a>
+    </div>
+  </div>
+</section>

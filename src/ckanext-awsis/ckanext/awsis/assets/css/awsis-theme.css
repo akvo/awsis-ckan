@@ -1,0 +1,1813 @@
+/* AWSIS Theme Styles - Clean & Sharp Design */
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--awsis-gray-800);
+  line-height: 1.6;
+  background-color: var(--awsis-white);
+}
+
+h1, h2, h3, h4, h5, h6,
+.title, .subtitle {
+  font-family: var(--font-heading);
+  color: var(--awsis-dark);
+  font-weight: 600;
+}
+
+a {
+  color: var(--awsis-primary);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--awsis-primary-dark);
+}
+
+/* ============================================
+   Navigation / Header
+   ============================================ */
+
+.awsis-header .navbar {
+  border: none;
+  border-radius: 0;
+  margin-bottom: 0;
+  min-height: auto;
+}
+
+.awsis-header .navbar-brand {
+  float: none;
+  height: auto;
+  padding: 0;
+  font-size: inherit;
+}
+
+.awsis-header .container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.awsis-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  background: rgba(255, 255, 255, 0.98);
+  border-bottom: 1px solid var(--awsis-gray-200);
+  transition: all 0.3s ease;
+}
+
+.awsis-header.is-scrolled {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.awsis-navbar {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  background: transparent !important;
+  box-shadow: none !important;
+  position: relative;
+}
+
+.awsis-navbar .navbar-brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.awsis-navbar .navbar-brand > a {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.awsis-navbar .awsis-logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--awsis-dark) !important;
+  letter-spacing: -0.02em;
+}
+
+.awsis-navbar .awsis-logo:hover {
+  color: var(--awsis-primary) !important;
+}
+
+.awsis-navbar .navbar-menu {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: space-between;
+  box-shadow: none;
+  padding: 0;
+  background: transparent;
+}
+
+.awsis-navbar .navbar-start {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+}
+
+.awsis-navbar .navbar-end {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.awsis-navbar .navbar-item {
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--awsis-gray-700) !important;
+  transition: color 0.2s ease;
+  padding: 0.5rem 1rem;
+  background: transparent !important;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.awsis-navbar .navbar-item:hover,
+.awsis-navbar .navbar-item:focus {
+  color: var(--awsis-primary) !important;
+  background: transparent !important;
+  text-decoration: none;
+}
+
+/* Burger menu - hidden on desktop */
+.awsis-header .navbar-burger {
+  display: none !important;
+}
+
+.awsis-header .navbar-burger span {
+  background-color: currentColor;
+  display: block;
+  height: 2px;
+  left: calc(50% - 10px);
+  position: absolute;
+  width: 20px;
+  transition: all 0.2s ease;
+}
+
+.awsis-header .navbar-burger span:nth-child(1) { top: calc(50% - 6px); }
+.awsis-header .navbar-burger span:nth-child(2) { top: calc(50% - 1px); }
+.awsis-header .navbar-burger span:nth-child(3) { top: calc(50% + 4px); }
+
+.awsis-nav-cta {
+  background: var(--awsis-primary) !important;
+  color: var(--awsis-white) !important;
+  border-radius: 0;
+  padding: 0.6rem 1.5rem !important;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.awsis-nav-cta:hover {
+  background: var(--awsis-primary-dark) !important;
+  color: var(--awsis-white) !important;
+  text-decoration: none;
+}
+
+/* Dropdown styles */
+.awsis-navbar .navbar-item.has-dropdown {
+  position: relative;
+}
+
+.awsis-navbar .navbar-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  min-width: 160px;
+  padding: 0.25rem 0;
+  z-index: 1040;
+  border: 1px solid var(--awsis-gray-200);
+}
+
+.awsis-navbar .navbar-item.has-dropdown:hover .navbar-dropdown,
+.awsis-navbar .navbar-item.has-dropdown.is-active .navbar-dropdown {
+  display: block;
+}
+
+.awsis-navbar .navbar-dropdown .navbar-item {
+  padding: 0.35rem 1rem;
+  display: block;
+  font-size: 0.875rem;
+}
+
+.awsis-navbar .navbar-dropdown .navbar-item:hover {
+  background: var(--awsis-gray-100) !important;
+}
+
+.awsis-navbar .navbar-divider {
+  height: 1px;
+  background: var(--awsis-gray-200);
+  margin: 0.25rem 0;
+  border: none;
+}
+
+/* User menu */
+.awsis-user-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.awsis-user-avatar {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border: 2px solid var(--awsis-gray-200);
+}
+
+/* Mobile/Tablet styles */
+@media screen and (max-width: 1023px) {
+  .awsis-header .navbar-burger {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--awsis-gray-700);
+    cursor: pointer;
+    width: 3rem;
+    height: 3rem;
+    margin-left: auto;
+    background: none;
+    border: none;
+    position: relative;
+  }
+
+  .awsis-header .navbar-menu {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    align-items: stretch;
+    border-top: 1px solid var(--awsis-gray-200);
+  }
+
+  .awsis-header .navbar-menu.is-active {
+    display: flex;
+  }
+
+  .awsis-header .navbar-start,
+  .awsis-header .navbar-end {
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0;
+  }
+
+  .awsis-header .navbar-item {
+    padding: 0.75rem 1rem;
+  }
+
+  .awsis-header .navbar-dropdown {
+    position: static;
+    box-shadow: none;
+    padding-left: 1rem;
+    border: none;
+  }
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+
+.awsis-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-top: -70px;
+  padding-top: 70px;
+}
+
+.awsis-hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.awsis-hero-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.awsis-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(26, 58, 58, 0.8);
+}
+
+.awsis-hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 900px;
+  padding: 2rem;
+}
+
+.awsis-hero-title {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--awsis-white);
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.awsis-hero-subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.awsis-hero-search {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.awsis-hero-search .field {
+  display: flex;
+  background: var(--awsis-white);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.awsis-hero-search input {
+  border: none;
+  box-shadow: none;
+  font-size: 1.125rem;
+  padding: 1rem 1.5rem;
+  flex: 1;
+  border-radius: 0;
+}
+
+.awsis-hero-search input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.awsis-hero-search button {
+  background: var(--awsis-primary);
+  color: var(--awsis-white);
+  border: none;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border-radius: 0;
+}
+
+.awsis-hero-search button:hover {
+  background: var(--awsis-primary-dark);
+}
+
+.awsis-hero-cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.awsis-hero-cta .button {
+  padding: 1rem 2rem;
+  font-weight: 600;
+  border-radius: 0;
+  transition: all 0.2s ease;
+}
+
+.awsis-hero-cta .button.is-primary {
+  background: var(--awsis-primary);
+  border-color: var(--awsis-primary);
+  color: var(--awsis-white);
+}
+
+.awsis-hero-cta .button.is-primary:hover {
+  background: var(--awsis-primary-dark);
+  border-color: var(--awsis-primary-dark);
+}
+
+.awsis-hero-cta .button.is-outlined {
+  border: 2px solid var(--awsis-white);
+  color: var(--awsis-white);
+  background: transparent;
+}
+
+.awsis-hero-cta .button.is-outlined:hover {
+  background: var(--awsis-white);
+  color: var(--awsis-primary);
+}
+
+/* ============================================
+   Statistics Section
+   ============================================ */
+
+.awsis-stats {
+  padding: 3rem 0;
+  background: var(--awsis-gray-50);
+}
+
+.awsis-stats-grid {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.awsis-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: transparent;
+}
+
+.awsis-stat-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.awsis-stat-icon svg {
+  width: 48px;
+  height: 48px;
+  color: var(--awsis-primary);
+}
+
+.awsis-stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.awsis-stat-number {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--awsis-dark);
+  line-height: 1;
+}
+
+.awsis-stat-label {
+  font-size: 0.75rem;
+  color: var(--awsis-gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+/* ============================================
+   Themes Section
+   ============================================ */
+
+.awsis-themes {
+  padding: 6rem 0;
+  background: var(--awsis-white);
+}
+
+.awsis-section-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem;
+}
+
+.awsis-section-title {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--awsis-dark);
+  margin-bottom: 1rem;
+}
+
+.awsis-section-subtitle {
+  font-size: 1.125rem;
+  color: var(--awsis-gray-600);
+}
+
+.awsis-themes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.awsis-theme-card {
+  background: var(--awsis-white);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease;
+  border: 1px solid var(--awsis-gray-200);
+  text-decoration: none;
+  display: block;
+}
+
+.awsis-theme-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.awsis-theme-card-icon {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--awsis-gray-100);
+}
+
+.awsis-theme-card-icon svg {
+  width: 64px;
+  height: 64px;
+  color: var(--awsis-primary);
+}
+
+.awsis-theme-card-content {
+  padding: 1.5rem;
+}
+
+.awsis-theme-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--awsis-dark);
+  margin-bottom: 0.5rem;
+}
+
+.awsis-theme-card-description {
+  font-size: 0.875rem;
+  color: var(--awsis-gray-600);
+  margin-bottom: 1rem;
+}
+
+.awsis-theme-card-link {
+  font-weight: 600;
+  color: var(--awsis-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.awsis-theme-card-link:hover {
+  color: var(--awsis-primary-dark);
+}
+
+/* ============================================
+   Featured Datasets Section
+   ============================================ */
+
+.awsis-featured {
+  padding: 6rem 0;
+  background: var(--awsis-gray-50);
+}
+
+.awsis-featured-carousel {
+  padding: 1rem 0;
+}
+
+.awsis-dataset-card {
+  background: var(--awsis-white);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--awsis-gray-200);
+}
+
+.awsis-dataset-card-header {
+  padding: 1.5rem;
+  background: var(--awsis-secondary);
+  color: var(--awsis-white);
+}
+
+.awsis-dataset-card-org {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+}
+
+.awsis-dataset-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.awsis-dataset-card-body {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.awsis-dataset-card-description {
+  font-size: 0.875rem;
+  color: var(--awsis-gray-600);
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.awsis-dataset-card-meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.awsis-dataset-card-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--awsis-gray-500);
+}
+
+.awsis-dataset-card-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--awsis-gray-200);
+}
+
+.awsis-dataset-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--awsis-primary);
+}
+
+/* Swiper customization */
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--awsis-primary);
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--awsis-primary);
+}
+
+/* ============================================
+   Partners Section
+   ============================================ */
+
+.awsis-partners {
+  padding: 5rem 0;
+  background: var(--awsis-gray-100);
+}
+
+.awsis-partners-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.awsis-partner-logo {
+  max-width: 180px;
+  max-height: 80px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  filter: grayscale(30%);
+}
+
+.awsis-partner-logo:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+
+.awsis-footer {
+  background: var(--awsis-dark);
+  color: var(--awsis-gray-300);
+  padding: 4rem 0 2rem;
+}
+
+.awsis-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.awsis-footer-brand {
+  max-width: 280px;
+}
+
+.awsis-footer-logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--awsis-white);
+  margin-bottom: 1rem;
+}
+
+.awsis-footer-brand p {
+  font-size: 0.875rem;
+  color: var(--awsis-gray-400);
+  line-height: 1.7;
+}
+
+.awsis-footer-title {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--awsis-white);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.awsis-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.awsis-footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.awsis-footer-links a {
+  color: var(--awsis-gray-400);
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.awsis-footer-links a:hover {
+  color: var(--awsis-primary);
+}
+
+.awsis-footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.awsis-footer-bottom p {
+  font-size: 0.875rem;
+  color: var(--awsis-gray-500);
+}
+
+.awsis-footer-bottom a {
+  color: var(--awsis-primary);
+}
+
+/* ============================================
+   CKAN Overrides
+   ============================================ */
+
+/* Add padding for fixed header on all pages */
+body {
+  padding-top: 70px;
+}
+
+/* Remove extra padding on homepage since hero handles it */
+.awsis-homepage {
+  padding-top: 0;
+}
+
+.awsis-homepage .masthead {
+  display: none;
+}
+
+/* Hide default CKAN masthead/account on all pages - we use custom header */
+.masthead {
+  display: none !important;
+}
+
+.account-masthead {
+  display: none !important;
+}
+
+/* Page wrapper */
+.wrapper {
+  padding-top: 0;
+  box-shadow: none;
+}
+
+/* Remove box shadows */
+.box,
+.module,
+.wrapper,
+.primary,
+.secondary {
+  box-shadow: none !important;
+}
+
+/* Main content area */
+main.main,
+.main {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+/* Page headings */
+.page-heading {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--awsis-dark);
+  margin-bottom: 1.5rem;
+}
+
+/* Module styling */
+.module {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.module-heading {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--awsis-gray-200);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.module-content {
+  padding: 1rem 0;
+  border: none;
+}
+
+.module-footer {
+  border: none;
+  background: transparent;
+}
+
+/* Search form */
+.search-form {
+  margin-bottom: 2rem;
+}
+
+.search-form .search-input-group {
+  border-radius: 0;
+  display: flex;
+  border: 2px solid var(--awsis-gray-300);
+  background: var(--awsis-white);
+}
+
+.search-form .search-input-group:focus-within {
+  border-color: var(--awsis-primary);
+}
+
+.search-form input[type="text"],
+.search-form .form-control {
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.search-form input[type="text"]:focus,
+.search-form .form-control:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.search-form button,
+.search-form .btn {
+  border-radius: 0;
+  background: var(--awsis-primary);
+  border: none;
+  color: var(--awsis-white);
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+}
+
+.search-form button:hover,
+.search-form .btn:hover {
+  background: var(--awsis-primary-dark);
+}
+
+/* Page header area */
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--awsis-gray-200);
+}
+
+.page-header h1,
+.page-heading {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--awsis-dark);
+  margin: 0;
+}
+
+/* Results info */
+.search-results-count,
+.filter-list {
+  font-size: 0.875rem;
+  color: var(--awsis-gray-600);
+  margin-bottom: 1rem;
+}
+
+/* Primary content area */
+.primary {
+  background: transparent;
+}
+
+/* Secondary/Sidebar */
+.secondary {
+  background: transparent;
+}
+
+.secondary .module-heading {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--awsis-gray-600);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Facet navigation */
+.nav-facet,
+.nav-simple {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-facet li,
+.nav-simple li {
+  margin-bottom: 0;
+}
+
+.nav-facet li a,
+.nav-simple li a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  color: var(--awsis-gray-700);
+  text-decoration: none;
+  border-bottom: 1px solid var(--awsis-gray-100);
+  transition: color 0.2s ease;
+}
+
+.nav-facet li a:hover,
+.nav-simple li a:hover {
+  color: var(--awsis-primary);
+}
+
+.nav-facet li.active a,
+.nav-simple li.active a {
+  color: var(--awsis-primary);
+  font-weight: 600;
+}
+
+.nav-facet .count,
+.nav-item-count {
+  font-size: 0.75rem;
+  color: var(--awsis-gray-500);
+  background: var(--awsis-gray-100);
+  padding: 0.125rem 0.5rem;
+}
+
+/* Order by dropdown */
+.form-select,
+select.form-control {
+  border-radius: 0;
+  border: 1px solid var(--awsis-gray-300);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  background-color: var(--awsis-white);
+}
+
+/* Toolbar/Actions */
+.toolbar,
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Empty state for no results */
+.dataset-list:empty::after,
+.no-results {
+  content: '';
+  display: block;
+  text-align: center;
+  padding: 3rem;
+  color: var(--awsis-gray-500);
+}
+
+/* Dataset/Organization list items */
+.dataset-list,
+.media-grid {
+  margin-top: 1rem;
+}
+
+.dataset-item {
+  border: none;
+  border-bottom: 1px solid var(--awsis-gray-200);
+  border-radius: 0;
+  padding: 1.5rem 1.5rem 1.25rem 1.5rem;
+  margin-bottom: 0;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.dataset-item .dataset-content {
+  margin-bottom: 0.5rem;
+}
+
+.dataset-item:last-child,
+.media-item:last-child {
+  border-bottom: none;
+}
+
+.dataset-item:hover,
+.media-item:hover {
+  background: var(--awsis-gray-50);
+}
+
+.dataset-heading {
+  margin-bottom: 0.5rem;
+}
+
+.dataset-heading a,
+.media-heading a {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--awsis-dark);
+  text-decoration: none;
+}
+
+.dataset-heading a:hover,
+.media-heading a:hover {
+  color: var(--awsis-primary);
+}
+
+.dataset-item .notes,
+.dataset-item p {
+  color: var(--awsis-gray-600);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0.5rem 0;
+}
+
+.dataset-item .dataset-resources,
+.dataset-resources {
+  margin-top: 0.75rem;
+}
+
+.dataset-item .dataset-resources li a,
+.dataset-resources li a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  background: var(--awsis-gray-100);
+  color: var(--awsis-gray-700);
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.dataset-item .dataset-resources li a:hover,
+.dataset-resources li a:hover {
+  background: var(--awsis-primary);
+  color: var(--awsis-white);
+}
+
+/* Organization badge in dataset item */
+.dataset-item .dataset-private,
+.dataset-item .dataset-organization {
+  font-size: 0.75rem;
+  color: var(--awsis-gray-500);
+  margin-bottom: 0.25rem;
+}
+
+/* Organization/Group cards */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.media-item {
+  border: 1px solid var(--awsis-gray-200);
+  border-bottom: 1px solid var(--awsis-gray-200);
+  padding: 1.5rem;
+  margin: 0;
+  background: var(--awsis-white);
+  transition: border-color 0.2s ease;
+}
+
+.media-item:hover {
+  border-color: var(--awsis-primary);
+  background: var(--awsis-white);
+}
+
+.media-item .media-image {
+  margin-bottom: 1rem;
+}
+
+.media-item img {
+  max-width: 100%;
+  height: auto;
+}
+
+.media-item .media-heading {
+  margin-bottom: 0.5rem;
+}
+
+.media-item .media-heading a {
+  font-size: 1.125rem;
+}
+
+.media-item .media-description {
+  font-size: 0.875rem;
+  color: var(--awsis-gray-600);
+  line-height: 1.5;
+}
+
+.media-item .count {
+  font-size: 0.75rem;
+  color: var(--awsis-gray-500);
+  margin-top: 0.75rem;
+}
+
+/* Tags */
+.tag {
+  background: var(--awsis-gray-100);
+  border: 1px solid var(--awsis-gray-200);
+  border-radius: 0;
+  color: var(--awsis-gray-700);
+}
+
+.tag:hover {
+  background: var(--awsis-primary);
+  border-color: var(--awsis-primary);
+  color: var(--awsis-white);
+}
+
+/* Buttons */
+.btn {
+  border-radius: 0;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.btn-primary,
+.btn-primary:visited {
+  background: var(--awsis-primary) !important;
+  border-color: var(--awsis-primary) !important;
+  color: var(--awsis-white) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background: var(--awsis-primary-dark) !important;
+  border-color: var(--awsis-primary-dark) !important;
+  color: var(--awsis-white) !important;
+}
+
+.btn-default,
+.btn-secondary {
+  background: var(--awsis-white);
+  border-color: var(--awsis-gray-300);
+  color: var(--awsis-gray-700);
+}
+
+.btn-default:hover,
+.btn-secondary:hover {
+  background: var(--awsis-gray-100);
+  border-color: var(--awsis-gray-400);
+  color: var(--awsis-gray-800);
+}
+
+.btn-success,
+.btn-success:visited,
+a.btn-success,
+a.btn-success:visited,
+button.btn-success {
+  background: var(--awsis-primary) !important;
+  border-color: var(--awsis-primary) !important;
+  color: #ffffff !important;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+a.btn-success:hover,
+a.btn-success:focus,
+a.btn-success:active {
+  background: var(--awsis-primary-dark) !important;
+  border-color: var(--awsis-primary-dark) !important;
+  color: #ffffff !important;
+}
+
+.btn-danger {
+  background: #dc3545;
+  border-color: #dc3545;
+  color: var(--awsis-white);
+}
+
+.btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+/* Forms */
+.form-control {
+  border-radius: 0;
+  border: 1px solid var(--awsis-gray-300);
+}
+
+.form-control:focus {
+  border-color: var(--awsis-primary);
+  box-shadow: 0 0 0 2px rgba(3, 173, 140, 0.1);
+}
+
+/* Login/Register pages */
+.user-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--awsis-white);
+  border: 1px solid var(--awsis-gray-200);
+}
+
+/* About page */
+.about-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.breadcrumb > li + li:before {
+  color: var(--awsis-gray-400);
+}
+
+/* Pagination */
+.pagination > li > a,
+.pagination > li > span {
+  border-radius: 0;
+  color: var(--awsis-gray-700);
+  border-color: var(--awsis-gray-300);
+}
+
+.pagination > li > a:hover {
+  background: var(--awsis-gray-100);
+  border-color: var(--awsis-gray-400);
+}
+
+.pagination > .active > a,
+.pagination > .active > a:hover {
+  background: var(--awsis-primary);
+  border-color: var(--awsis-primary);
+}
+
+/* Filters sidebar */
+.filters .nav-item a {
+  border-radius: 0;
+}
+
+.filters .nav-item.active a {
+  background: var(--awsis-primary);
+  color: var(--awsis-white);
+}
+
+/* Alerts */
+.alert {
+  border-radius: 0;
+}
+
+.alert-info {
+  background: var(--awsis-light);
+  border-color: var(--awsis-primary);
+  color: var(--awsis-dark);
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 3rem;
+  color: var(--awsis-gray-600);
+}
+
+.btn-primary,
+.button.is-primary {
+  background-color: var(--awsis-primary);
+  border-color: var(--awsis-primary);
+  border-radius: 0;
+}
+
+.btn-primary:hover,
+.button.is-primary:hover {
+  background-color: var(--awsis-primary-dark);
+  border-color: var(--awsis-primary-dark);
+}
+
+.module-content a,
+.dataset-heading a {
+  color: var(--awsis-primary);
+}
+
+/* ============================================
+   Responsive Adjustments
+   ============================================ */
+
+@media screen and (max-width: 1024px) {
+  .awsis-hero-title {
+    font-size: 2.25rem;
+  }
+
+  .awsis-section-title {
+    font-size: 1.875rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .awsis-hero {
+    min-height: auto;
+    padding: 6rem 0 4rem;
+  }
+
+  .awsis-hero-title {
+    font-size: 1.875rem;
+  }
+
+  .awsis-hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .awsis-hero-search .field {
+    flex-direction: column;
+  }
+
+  .awsis-stats {
+    padding: 2rem 0;
+  }
+
+  .awsis-themes,
+  .awsis-featured {
+    padding: 4rem 0;
+  }
+
+  .awsis-section-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .awsis-partners-grid {
+    gap: 2rem;
+  }
+
+  .awsis-partner-logo {
+    max-width: 140px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .awsis-hero-content {
+    padding: 1rem;
+  }
+
+  .awsis-hero-cta .button {
+    width: 100%;
+  }
+
+  .awsis-stats-grid {
+    gap: 1.5rem;
+  }
+
+  .awsis-stat-card {
+    padding: 0.75rem 1rem;
+  }
+
+  .awsis-stat-number {
+    font-size: 1.5rem;
+  }
+}
+
+/* ============================================
+   Utility classes
+   ============================================ */
+
+.text-center {
+  text-align: center;
+}
+
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+.mt-4 { margin-top: 1rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mt-8 { margin-top: 2rem; }
+.mb-8 { margin-bottom: 2rem; }
+
+/* ============================================
+   Resource Page - Data API Button
+   ============================================ */
+
+.btn-info,
+.btn-info:visited,
+a.btn-info,
+a.btn-info:visited,
+button.btn-info {
+  background: var(--awsis-secondary) !important;
+  border-color: var(--awsis-secondary) !important;
+  color: #ffffff !important;
+  border-radius: 0;
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+a.btn-info:hover,
+a.btn-info:focus,
+a.btn-info:active {
+  background: #174a5c !important;
+  border-color: #174a5c !important;
+  color: #ffffff !important;
+}
+
+/* Data API modal/popover */
+.popover {
+  border-radius: 0;
+  border: 1px solid var(--awsis-gray-200);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.popover-title {
+  background: var(--awsis-gray-50);
+  border-bottom: 1px solid var(--awsis-gray-200);
+  border-radius: 0;
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+.popover-content {
+  padding: 1rem;
+}
+
+.popover-content pre {
+  background: var(--awsis-gray-100);
+  border: 1px solid var(--awsis-gray-200);
+  border-radius: 0;
+  padding: 0.75rem;
+  font-size: 0.8125rem;
+}
+
+/* Resource module */
+.module.module-resource {
+  background: #ffffff;
+}
+
+/* Accordion styles */
+.accordion {
+  border: 1px solid var(--awsis-gray-200);
+  background: var(--awsis-white);
+}
+
+.accordion-item {
+  border: none;
+  border-bottom: 1px solid var(--awsis-gray-200);
+  background: transparent;
+}
+
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion-header {
+  margin: 0;
+  background: transparent;
+}
+
+.accordion-button {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 3rem 0.75rem 1rem;
+  background: var(--awsis-white) !important;
+  border: none;
+  border-radius: 0;
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  gap: 0.5rem;
+}
+
+.accordion-button:not(.collapsed) {
+  background: var(--awsis-gray-50) !important;
+  color: var(--awsis-dark);
+  box-shadow: none;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.accordion-button::after {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  flex-shrink: 0;
+}
+
+.accordion-button .col-1 {
+  color: var(--awsis-gray-500);
+  width: auto;
+  flex: 0 0 2rem;
+  padding: 0;
+}
+
+.accordion-button .col-7 {
+  flex: 1;
+  font-weight: 500;
+  color: var(--awsis-dark);
+  padding: 0;
+}
+
+.accordion-button .col-4 {
+  flex: 0 0 auto;
+  color: var(--awsis-gray-600);
+  font-size: 0.8125rem;
+  padding: 0;
+  margin-right: 1rem;
+}
+
+.accordion-collapse {
+  background: var(--awsis-gray-50);
+}
+
+.accordion-body {
+  padding: 1rem 1.5rem;
+  background: var(--awsis-gray-50);
+}
+
+.accordion-body.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.accordion-body dt {
+  font-weight: 500;
+  padding: 0.25rem 0;
+}
+
+.accordion-body dd {
+  color: var(--awsis-gray-700);
+  padding: 0.25rem 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Button group with dropdown */
+.btn-group {
+  display: inline-flex;
+}
+
+.btn-group .btn {
+  border-radius: 0;
+}
+
+.btn-group .dropdown-toggle {
+  padding: 0.5rem 0.75rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-group .dropdown-toggle::after {
+  display: none;
+}
+
+.btn-group .dropdown-toggle .caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid currentColor;
+  vertical-align: middle;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  border-radius: 0;
+  border: 1px solid var(--awsis-gray-200);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 0.25rem 0;
+  min-width: 8rem;
+}
+
+.dropdown-menu li {
+  list-style: none;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: var(--awsis-gray-700);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: var(--awsis-gray-100);
+  color: var(--awsis-primary);
+  text-decoration: none;
+}
+
+/* ============================================
+   Sidebar / Secondary Column
+   ============================================ */
+
+.secondary {
+  padding-left: 2rem;
+}
+
+.secondary .module-narrow {
+  background: var(--awsis-white);
+  border: 1px solid var(--awsis-gray-200);
+  margin-bottom: 1.5rem;
+}
+
+.secondary .module-narrow .module-heading {
+  background: var(--awsis-gray-50);
+  padding: 0.875rem 1rem;
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--awsis-gray-600);
+  border-bottom: 1px solid var(--awsis-gray-200);
+}
+
+.secondary .module-narrow .module-heading i {
+  margin-right: 0.5rem;
+  color: var(--awsis-primary);
+}
+
+.secondary .nav-simple {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.secondary .nav-simple .nav-item {
+  border-bottom: 1px solid var(--awsis-gray-100);
+}
+
+.secondary .nav-simple .nav-item:last-child {
+  border-bottom: none;
+}
+
+.secondary .nav-simple .nav-item a {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: var(--awsis-gray-700);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.secondary .nav-simple .nav-item a:hover {
+  background: var(--awsis-gray-50);
+  color: var(--awsis-primary);
+}
+
+.secondary .nav-simple .nav-item.active a {
+  background: var(--awsis-primary);
+  color: var(--awsis-white);
+  font-weight: 500;
+}
+
+.module-narrow .nav-item.active > a::before,
+.module-narrow .nav-aside li.active a::before {
+  display: none;
+}
+
+.secondary .nav-simple .nav-item a i {
+  margin-right: 0.75rem;
+  width: 1rem;
+  text-align: center;
+}
+
+/* Social module */
+.secondary .module.social .nav-item a {
+  gap: 0.5rem;
+}
+
+.secondary .module.social .nav-item a i {
+  font-size: 1.125rem;
+}
+
+/* Add new resource button in sidebar */
+.secondary > .module-content {
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.secondary > .module-content .btn {
+  width: 100%;
+  text-align: center;
+  padding: 0.75rem 1rem;
+}
+
+.secondary > .module-content .btn i {
+  margin-right: 0.5rem;
+}
+
+/* Dataset resource badges */
+.badge-default,
+.badge.badge-default,
+a.badge.badge-default,
+a.badge[data-format] {
+  background: #4a5568 !important;
+  color: #ffffff !important;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0;
+  text-decoration: none;
+}
+
+.badge-default:hover,
+.badge.badge-default:hover,
+a.badge.badge-default:hover,
+a.badge[data-format]:hover {
+  background: #2d3748 !important;
+  color: #ffffff !important;
+  text-decoration: none;
+}
