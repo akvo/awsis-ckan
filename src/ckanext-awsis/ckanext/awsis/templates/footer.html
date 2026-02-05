@@ -1,0 +1,55 @@
+<footer class="awsis-footer">
+  <div class="container">
+    <div class="awsis-footer-grid">
+      <!-- Brand Column -->
+      <div class="awsis-footer-brand">
+        <div class="awsis-footer-logo">AWSIS</div>
+        <p>
+          The Water Security Information System (AWSIS) provides open data
+          and insights for sustainable water management.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="awsis-footer-title">Explore Data</h4>
+        <ul class="awsis-footer-links">
+          <li><a href="{{ h.url_for('dataset.search') }}">All Datasets</a></li>
+          <li><a href="{{ h.url_for('organization.index') }}">Organizations</a></li>
+          <li><a href="{{ h.url_for('group.index') }}">Groups</a></li>
+          <li><a href="/dataset?tags=water-quality">Water Quality Data</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div>
+        <h4 class="awsis-footer-title">Resources</h4>
+        <ul class="awsis-footer-links">
+          <li><a href="{{ h.url_for('home.about') }}">About AWSIS</a></li>
+          <li><a href="/api">API Documentation</a></li>
+          <li><a href="https://akvo.org" target="_blank" rel="noopener">Akvo</a></li>
+          <li><a href="https://docs.ckan.org" target="_blank" rel="noopener">CKAN Docs</a></li>
+        </ul>
+      </div>
+
+      <!-- Supported by -->
+      <div>
+        <h4 class="awsis-footer-title">Supported by</h4>
+        <div style="margin-top: 0.5rem;">
+          <a href="https://oakfnd.org" target="_blank" rel="noopener">
+            <img src="/images/logo-oak.png" alt="Oak Foundation" style="max-height: 60px; filter: brightness(0) invert(1);">
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="awsis-footer-bottom">
+      <p>
+        &copy; 2026 AWSIS - Water Security Information System.
+        Built with <a href="https://ckan.org" target="_blank" rel="noopener">CKAN</a>.
+        Developed by <a href="https://akvo.org" target="_blank" rel="noopener">Akvo</a>.
+      </p>
+    </div>
+  </div>
+</footer>

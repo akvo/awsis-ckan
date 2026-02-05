@@ -1,0 +1,1 @@
+# No external pip dependencies - all assets are self-hosted

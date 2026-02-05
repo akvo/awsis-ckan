@@ -1,0 +1,4 @@
+include README.md
+recursive-include ckanext/awsis/public *
+recursive-include ckanext/awsis/templates *
+recursive-include ckanext/awsis/assets *

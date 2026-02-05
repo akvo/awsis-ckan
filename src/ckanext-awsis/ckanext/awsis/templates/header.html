@@ -1,0 +1,83 @@
+<header class="awsis-header" x-data="{ isOpen: false, isScrolled: false }"
+        x-init="window.addEventListener('scroll', () => { isScrolled = window.scrollY > 50 })"
+        :class="{ 'is-scrolled': isScrolled }">
+  <nav class="navbar awsis-navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item awsis-logo" href="{{ h.url_for('home.index') }}">
+          AWSIS
+        </a>
+      </div>
+
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+         :class="{ 'is-active': isOpen }"
+         @click="isOpen = !isOpen">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+
+      <div class="navbar-menu" :class="{ 'is-active': isOpen }">
+        <div class="navbar-start">
+          <a class="navbar-item" href="{{ h.url_for('home.index') }}">
+            Home
+          </a>
+          <a class="navbar-item" href="{{ h.url_for('dataset.search') }}">
+            Datasets
+          </a>
+          <a class="navbar-item" href="{{ h.url_for('organization.index') }}">
+            Organizations
+          </a>
+          <a class="navbar-item" href="{{ h.url_for('group.index') }}">
+            Groups
+          </a>
+          <a class="navbar-item" href="{{ h.url_for('home.about') }}">
+            About
+          </a>
+        </div>
+
+        <div class="navbar-end">
+          {% if c.userobj %}
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link awsis-user-menu">
+                <img src="{{ c.userobj.image_url or h.url_for_static('/base/images/placeholder-user.png') }}"
+                     alt="{{ c.userobj.display_name }}"
+                     class="awsis-user-avatar">
+                <span>{{ c.userobj.display_name }}</span>
+              </a>
+              <div class="navbar-dropdown is-right">
+                <a class="navbar-item" href="{{ h.url_for('user.read', id=c.userobj.name) }}">
+                  My Profile
+                </a>
+                <a class="navbar-item" href="{{ h.url_for('dashboard.datasets') }}">
+                  Dashboard
+                </a>
+                {% if h.check_access('sysadmin') %}
+                  <hr class="navbar-divider">
+                  <a class="navbar-item" href="{{ h.url_for('admin.index') }}">
+                    Admin
+                  </a>
+                {% endif %}
+                <hr class="navbar-divider">
+                <a class="navbar-item" href="{{ h.url_for('user.logout') }}">
+                  Log Out
+                </a>
+              </div>
+            </div>
+          {% else %}
+            <a class="navbar-item" href="{{ h.url_for('user.login') }}">
+              Log In
+            </a>
+            {% if h.asbool(config.get('ckan.auth.create_user_via_web', True)) %}
+              <div class="navbar-item">
+                <a class="awsis-nav-cta" href="{{ h.url_for('user.register') }}">
+                  Register
+                </a>
+              </div>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

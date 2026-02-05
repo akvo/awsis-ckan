@@ -1,0 +1,23 @@
+{% ckan_extends %}
+
+{# Add AWSIS stylesheets #}
+{% block styles %}
+  {{ super() }}
+  {% asset 'awsis/awsis-css' %}
+{% endblock %}
+
+{# Add AWSIS scripts #}
+{% block scripts %}
+  {{ super() }}
+  {% asset 'awsis/awsis-js' %}
+{% endblock %}
+
+{# Override the header #}
+{% block header %}
+  {% include "header.html" %}
+{% endblock %}
+
+{# Override the footer #}
+{% block footer %}
+  {% include "footer.html" %}
+{% endblock %}

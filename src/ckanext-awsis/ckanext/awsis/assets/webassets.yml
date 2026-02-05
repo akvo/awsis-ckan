@@ -1,0 +1,17 @@
+awsis-css:
+  output: ckanext-awsis/%(version)s_awsis.css
+  contents:
+    - css/bulma.min.css
+    - css/aos.css
+    - css/swiper-bundle.min.css
+    - css/awsis-variables.css
+    - css/awsis-theme.css
+
+awsis-js:
+  output: ckanext-awsis/%(version)s_awsis.js
+  contents:
+    - js/alpine.min.js
+    - js/aos.min.js
+    - js/countup.min.js
+    - js/swiper-bundle.min.js
+    - js/awsis.js

@@ -1,0 +1,23 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _("Welcome") }}{% endblock %}
+
+{% block maintag %}
+<div class="awsis-homepage" role="main">
+{% endblock %}
+
+{% block toolbar %}{% endblock %}
+
+{% block content %}
+  {# Hero Section #}
+  {% include "home/snippets/hero.html" %}
+
+  {# Statistics Section #}
+  {% include "home/snippets/stats.html" %}
+
+  {# Thematic Areas Section #}
+  {% include "home/snippets/themes.html" %}
+{% endblock %}
+
+{% block primary %}{% endblock %}
+{% block secondary %}{% endblock %}
