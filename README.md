@@ -23,6 +23,48 @@ cp .env.dev.example .env
 This file contains critical configurations, including database connections, plugins, and other essential environment variables.
 </details>
 <details>
+<summary>Generate DataPusher API Token</summary>
+
+After the first run, you need to generate an API token for DataPusher to enable uploading data to the DataStore.
+
+**For Development:**
+```bash
+docker compose -f docker-compose.dev.yml exec ckan-dev ckan user token add <username> datapusher
+```
+
+**For Production:**
+```bash
+docker compose exec ckan ckan user token add <username> datapusher
+```
+
+> **Note:** Replace `<username>` with your CKAN sysadmin username. The default is `ckan_admin` (defined by `CKAN_SYSADMIN_NAME` in `.env`).
+
+This will output a token like:
+```
+API Token created:
+    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+Copy the token and update `CKAN__DATAPUSHER__API_TOKEN` in your `.env` file:
+
+```bash
+CKAN__DATAPUSHER__API_TOKEN=<your_generated_token>
+```
+
+Then restart the containers:
+
+**For Development:**
+```bash
+docker compose -f docker-compose.dev.yml restart ckan-dev
+```
+
+**For Production:**
+```bash
+docker compose restart ckan
+```
+
+</details>
+<details>
 <summary>Run the Dev Mode</summary>
 
 For the first-time setup, you may need to build the Docker images before running the development environment:
