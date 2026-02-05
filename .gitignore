@@ -4,6 +4,11 @@
 .env.dev
 .env.prod
 
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
 # code & config
 _service-provider/*
 _solr/schema.xml

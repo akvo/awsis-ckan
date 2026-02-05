@@ -1,2 +1,0 @@
-[ckan.plugins]
-awsis = ckanext.awsis.plugin:AwsisPlugin
