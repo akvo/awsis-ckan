@@ -33,9 +33,6 @@
           <a class="navbar-item" href="{{ h.url_for('organization.index') }}">
             Organizations
           </a>
-          <a class="navbar-item" href="{{ h.url_for('group.index') }}">
-            Groups
-          </a>
           <a class="navbar-item" href="{{ h.url_for('home.about') }}">
             About
           </a>
@@ -45,9 +42,7 @@
           {% if c.userobj %}
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link awsis-user-menu">
-                <img src="{{ c.userobj.image_url or h.url_for_static('/base/images/placeholder-user.png') }}"
-                     alt="{{ c.userobj.display_name }}"
-                     class="awsis-user-avatar">
+                {{ h.gravatar(c.userobj.email_hash if c.userobj.email_hash else '', size=32, default='identicon') }}
                 <span>{{ c.userobj.display_name }}</span>
               </a>
               <div class="navbar-dropdown is-right">
