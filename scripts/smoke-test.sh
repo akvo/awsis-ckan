@@ -11,7 +11,7 @@
 #   COMPOSE         default ./dc.sh (e.g. "docker compose -f docker-compose.yml")
 #   SERVICE         default ckan-dev (use "ckan" for the prod compose)
 #   SMOKE_KEEP      1 = keep the smoke dataset and print KEPT_RESOURCE_ID=<id>
-#   EXPECT_DPP      expected datapusher-plus version, default 3.0.0
+#   EXPECT_DPP      expected datapusher-plus git tag, default 3.0.0
 #   EXPECT_QSV      expected qsvdp version, default 13.0.0
 #   SMOKE_TIMEOUT   seconds to wait for DataStore ingestion, default 180
 
@@ -66,9 +66,11 @@ check_qsv_version() {
     else fail qsv_version "expected qsvdp $EXPECT_QSV, got '${out%%$'\n'*}'"; fi
 }
 
+# Reads the git tag of the editable checkout: DP+ package metadata is not
+# reliable (the 3.0.0 tag still declares version 2.0.0 in pyproject.toml).
 check_dpp_version() {
     local version
-    version="$(in_ckan pip show datapusher-plus 2>/dev/null | sed -n 's/^Version: //p')"
+    version="$(in_ckan sh -c 'git -c safe.directory="*" -C "$SRC_DIR/datapusher-plus" describe --tags --exact-match' 2>/dev/null || true)"
     if [ "$version" = "$EXPECT_DPP" ]; then pass dpp_version
     else fail dpp_version "expected $EXPECT_DPP, got '${version:-not installed}'"; fi
 }
@@ -140,10 +142,29 @@ check_datastore_roundtrip() {
 
     if [ "$(jq -r '.result.total' <<< "$search")" = "3" ] \
         && jq -e '.id == "numeric" and .salinity_ppt == "numeric" and .station == "text"
-                  and (.measured_on == "date" or .measured_on == "timestamp")' <<< "$types" > /dev/null; then
+                  and (.measured_date == "date" or .measured_on == "timestamp")' <<< "$types" > /dev/null; then
         pass datastore_roundtrip
     else
         fail datastore_roundtrip "total=$(jq -r '.result.total' <<< "$search") types=$types"
+    fi
+
+    check_resubmit_unchanged "$resource_id"
+}
+
+# Re-pushing an unchanged file must finish cleanly (DP+ skips it by hash).
+check_resubmit_unchanged() {
+    local resource_id="$1" status="" waited=0
+    api_json datapusher_submit "{\"resource_id\":\"$resource_id\"}" > /dev/null \
+        || { fail resubmit_unchanged "datapusher_submit failed"; return; }
+    while [ "$waited" -lt "$SMOKE_TIMEOUT" ]; do
+        sleep 5
+        waited=$((waited + 5))
+        status="$(api_json datapusher_status "{\"resource_id\":\"$resource_id\"}" | jq -r '.result.status')"
+        [ "$status" = "complete" ] || [ "$status" = "error" ] && break
+    done
+    if [ "$status" = "complete" ]; then pass resubmit_unchanged
+    else
+        fail resubmit_unchanged "status=$status $(api_json datapusher_status "{\"resource_id\":\"$resource_id\"}" | jq -c '.result.task_info.error // {}')"
     fi
 }
 
