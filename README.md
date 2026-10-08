@@ -223,9 +223,17 @@ Pushing to `main` deploys to the test server. Before merging:
 3. After the deploy, remove the old volume, which is no longer mounted (check the name with `docker volume ls`): `docker volume rm <project>_site_packages`
 4. Rebuild the search index: `docker compose exec ckan ckan search-index rebuild`. If Solr fails to start with the new image, remove the `solr_data` volume (the index is rebuilt from the database) and run the rebuild again.
 5. Run the smoke test against the server.
-6. Reload existing resources into the DataStore with DP+ 3.0: `docker compose exec ckan ckan datapusher-plus resubmit --yes`
+6. **Check date columns before reloading.** DP+ 3.0 only infers dates for columns whose names contain `date`, `time`, `due`, `open`, `close` or `created`. Reloading re-creates every DataStore table, so date columns with other names (e.g. `measured_on`) turn into text. List the current date/timestamp columns:
+   ```bash
+   docker compose exec -T db psql -U postgres -d datastore -c \
+     "SELECT table_name, column_name, data_type FROM information_schema.columns
+      WHERE table_schema = 'public' AND data_type IN ('date', 'timestamp without time zone')
+      ORDER BY 1, 2;"
+   ```
+   If any of those names don't match the list, set `CKANEXT__DATAPUSHER_PLUS__QSV_DATES_WHITELIST` in `.env` (comma-separated name fragments, or `all` to scan every column, which is slower on large files) and recreate the container: `docker compose up -d ckan`.
+7. Reload existing resources into the DataStore with DP+ 3.0: `docker compose exec ckan ckan datapusher-plus resubmit --yes`
 
-DP+ 3.0 only infers dates for columns whose names contain `date`, `time`, `due`, `open`, `close` or `created` (`ckanext.datapusher_plus.qsv_dates_whitelist`). Date columns with other names are loaded as text.
+DP+ caches its settings when CKAN starts, before env vars are applied. That is why `ckan/docker-entrypoint.d/02_setup_datapusher_plus.sh` writes the DP+ settings we use into `ckan.ini`. A new `CKANEXT__DATAPUSHER_PLUS__*` env var only takes effect if it is added to that script too.
 </details>
 
 Copying and License

@@ -54,6 +54,10 @@ api_json() { api "$1" -X POST -H 'Content-Type: application/json' -d "$2"; }
 
 cleanup() {
     if [ -n "$DATASET_NAME" ] && [ "$SMOKE_KEEP" != "1" ]; then
+        # dataset_purge leaves DataStore tables behind, so drop them first
+        for rid in $(api_json package_show "{\"id\":\"$DATASET_NAME\"}" 2>/dev/null | jq -r '.result.resources[].id' || true); do
+            api_json datastore_delete "{\"resource_id\":\"$rid\",\"force\":true}" > /dev/null 2>&1 || true
+        done
         api_json dataset_purge "{\"id\":\"$DATASET_NAME\"}" > /dev/null || true
     fi
 }
@@ -82,7 +86,7 @@ check_file_bin() {
 
 check_plugins_loaded() {
     local plugins loaded missing=()
-    plugins="$(in_ckan printenv CKAN__PLUGINS | tr -d '"')"
+    plugins="$(in_ckan printenv CKAN__PLUGINS | tr -d '"')" || { fail plugins_loaded "cannot read CKAN__PLUGINS from $SERVICE"; return; }
     loaded="$(api status_show | jq -r '.result.extensions[]')" || { fail plugins_loaded "status_show failed"; return; }
     for p in $plugins; do
         grep -qx "$p" <<< "$loaded" || missing+=("$p")
@@ -142,7 +146,7 @@ check_datastore_roundtrip() {
 
     if [ "$(jq -r '.result.total' <<< "$search")" = "3" ] \
         && jq -e '.id == "numeric" and .salinity_ppt == "numeric" and .station == "text"
-                  and (.measured_date == "date" or .measured_on == "timestamp")' <<< "$types" > /dev/null; then
+                  and (.measured_date == "date" or .measured_date == "timestamp")' <<< "$types" > /dev/null; then
         pass datastore_roundtrip
     else
         fail datastore_roundtrip "total=$(jq -r '.result.total' <<< "$search") types=$types"
@@ -154,12 +158,13 @@ check_datastore_roundtrip() {
 # Re-pushing an unchanged file must finish cleanly (DP+ skips it by hash).
 check_resubmit_unchanged() {
     local resource_id="$1" status="" waited=0
-    api_json datapusher_submit "{\"resource_id\":\"$resource_id\"}" > /dev/null \
-        || { fail resubmit_unchanged "datapusher_submit failed"; return; }
+    # result false means a pending job was found and nothing new was queued
+    [ "$(api_json datapusher_submit "{\"resource_id\":\"$resource_id\"}" | jq -r '.result')" = "true" ] \
+        || { fail resubmit_unchanged "datapusher_submit did not queue a new job"; return; }
     while [ "$waited" -lt "$SMOKE_TIMEOUT" ]; do
         sleep 5
         waited=$((waited + 5))
-        status="$(api_json datapusher_status "{\"resource_id\":\"$resource_id\"}" | jq -r '.result.status')"
+        status="$(api_json datapusher_status "{\"resource_id\":\"$resource_id\"}" | jq -r '.result.status')" || status=""
         [ "$status" = "complete" ] || [ "$status" = "error" ] && break
     done
     if [ "$status" = "complete" ]; then pass resubmit_unchanged
