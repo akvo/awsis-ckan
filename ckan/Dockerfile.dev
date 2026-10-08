@@ -59,7 +59,7 @@ RUN pip3 install --no-cache-dir setuptools==61.0
 RUN pip3 install -e 'git+https://github.com/ckan/ckanext-basiccharts.git@dfe2c4f5859c29f72960ed416f7f2bd77e3c3090#egg=ckanext-basiccharts'
 RUN pip3 install -e 'git+https://github.com/keitaroinc/ckanext-visualize.git@eb53fd00b6a99efd9d8924543ec3bb22774ec083#egg=ckanext-visualize'
 RUN pip3 install geojson==3.3.0 shapely==2.1.2 ckanext-pdfview==0.0.6 ckanext-contact==2.4.4
-RUN pip3 install -e 'git+https://github.com/ckan/ckanext-geoview.git@v0.2.0#egg=ckanext-geoview'
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-geoview.git@v0.2.2#egg=ckanext-geoview'
 RUN pip3 install -e 'git+https://github.com/ckan/ckanext-spatial.git@v2.3.2#egg=ckanext-spatial'
 RUN pip3 install -e 'git+https://github.com/ckan/ckanext-hierarchy.git@53c1ee74805d79aef7c9c01cc513eb881cb8928f#egg=ckanext-hierarchy' && pip3 install -r ${APP_DIR}/src/ckanext-hierarchy/requirements.txt
 RUN pip3 install -e 'git+https://github.com/ckan/ckanext-mapviews.git@caf1d0f6ab4168f3ac10a75881fa537144b01d34#egg=ckanext-mapviews'
