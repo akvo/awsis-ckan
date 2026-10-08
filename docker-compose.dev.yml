@@ -54,13 +54,13 @@ services:
         ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
 
   pgadmin:
-    image: dpage/pgadmin4:5.7
+    image: dpage/pgadmin4:9
     environment:
       - PGADMIN_LISTEN_PORT=5050
       - PGADMIN_DEFAULT_EMAIL=dev@akvo.org
       - PGADMIN_DEFAULT_PASSWORD=password
     volumes:
-      - ./pgadmin4/servers.json:/pgadmin4/servers.json
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
       - pg-admin-data:/var/lib/pgadmin
     depends_on:
       - db
