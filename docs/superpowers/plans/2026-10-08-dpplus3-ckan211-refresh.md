@@ -193,7 +193,7 @@ git commit -m "Remove ckan-docker template leftovers and document DP+ config"
   4. Merge, which triggers the deploy.
   5. Run `ckan search-index rebuild`.
   6. Run the smoke test against the test server.
-  7. Resubmit existing resources: `ckan datapusher_plus resubmit --yes`.
+  7. Resubmit existing resources: `ckan datapusher-plus resubmit --yes`.
 
 - [ ] **Step 3: Commit, then open a PR. Do not push to `main` directly.**
 

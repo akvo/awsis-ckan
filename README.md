@@ -190,6 +190,43 @@ docker compose restart
 ```
 This command will gracefully restart all running services while maintaining their configurations.
 </details>
+<details>
+<summary>Smoke Test</summary>
+
+`scripts/smoke-test.sh` checks the qsv and DataPusher+ versions, that every plugin in `CKAN__PLUGINS` is loaded, that the main pages render, and that a CSV is loaded into the DataStore and can be resubmitted. It needs `curl` and `jq` on the host and a sysadmin API token:
+
+```bash
+# Development
+CKAN_API_TOKEN=<token> scripts/smoke-test.sh
+
+# Production
+CKAN_API_TOKEN=<token> COMPOSE="docker compose" SERVICE=ckan CKAN_URL=https://<site> scripts/smoke-test.sh
+```
+
+It creates a `smoke-test-org` organization and purges the test dataset at the end.
+</details>
+<details>
+<summary>Upgrading (DataPusher+ 3.0 / CKAN 2.11.6)</summary>
+
+Pushing to `main` deploys to the test server. Before merging:
+
+1. Back up the databases:
+   ```bash
+   docker compose exec -T db pg_dump -U postgres -Fc ckandb > ckandb.dump
+   docker compose exec -T db pg_dump -U postgres -Fc datastore > datastore.dump
+   ```
+2. Update the server `.env` to match `.env.example`:
+   - `SOLR_IMAGE_VERSION=2.11-solr9-spatial`, `REDIS_VERSION=7`, `CKAN_VERSION=2.11.6`
+   - `CKAN__DATAPUSHER__FORMATS` (now includes `ods zip`)
+   - Keep `CKAN__DATAPUSHER__CALLBACK_URL_BASE=http://ckan:5000` and `CKAN__DATAPUSHER__API_TOKEN` (sysadmin token)
+   - `DATAPUSHER_VERSION` and `CKAN_DATAPUSHER_URL` can be removed
+3. After the deploy, remove the old volume, which is no longer mounted (check the name with `docker volume ls`): `docker volume rm <project>_site_packages`
+4. Rebuild the search index: `docker compose exec ckan ckan search-index rebuild`. If Solr fails to start with the new image, remove the `solr_data` volume (the index is rebuilt from the database) and run the rebuild again.
+5. Run the smoke test against the server.
+6. Reload existing resources into the DataStore with DP+ 3.0: `docker compose exec ckan ckan datapusher-plus resubmit --yes`
+
+DP+ 3.0 only infers dates for columns whose names contain `date`, `time`, `due`, `open`, `close` or `created` (`ckanext.datapusher_plus.qsv_dates_whitelist`). Date columns with other names are loaded as text.
+</details>
 
 Copying and License
 -------------------
