@@ -3,7 +3,6 @@ volumes:
   pg_data:
   solr_data:
   pip_cache:
-  site_packages:
   traefik-certificates:
 
 services:
@@ -60,7 +59,6 @@ services:
     volumes:
       - ckan_storage:/var/lib/ckan
       - pip_cache:/root/.cache/pip
-      - site_packages:/usr/lib/python3.10/site-packages
       - ./src:/srv/app/src_extensions
     restart: unless-stopped
     healthcheck:

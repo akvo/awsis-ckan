@@ -1563,6 +1563,23 @@ a.btn-info:active {
   color: #ffffff !important;
 }
 
+/* Bootstrap modals (Data API, embed view): Bulma's .modal and .modal-content
+   rules load after CKAN's and would put the dialog below the backdrop
+   (z-index 40 vs 1040), block scrolling and force a 640px width. The theme
+   does not use Bulma's modal component, so restore Bootstrap's values. */
+.modal {
+  z-index: 1060;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.modal-dialog .modal-content {
+  width: 100%;
+  max-height: none;
+  margin: 0;
+  overflow: visible;
+}
+
 /* Data API modal/popover */
 .popover {
   border-radius: 0;
@@ -1593,6 +1610,13 @@ a.btn-info:active {
 /* Resource module */
 .module.module-resource {
   background: #ffffff;
+}
+
+/* The Download/Data API .actions and the view's Fullscreen/Embed .actions both
+   get z-index 1 from CKAN core, so the later one paints over the open Download
+   dropdown. Lift the resource-level actions above the view's. */
+.module-resource .module-content > .actions {
+  z-index: 2;
 }
 
 /* Accordion styles */

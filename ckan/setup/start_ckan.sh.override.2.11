@@ -18,6 +18,14 @@ then
     ckan config-tool $CKAN_INI "api_token.jwt.decode.secret=${JWT_SECRET}"
 fi
 
+# Install local extensions first: prerun.py loads every plugin in CKAN__PLUGINS
+for i in /srv/app/src_extensions/*; do
+    if [ -f "$i/setup.py" ] || [ -f "$i/pyproject.toml" ]; then
+        [ -f "$i/requirements.txt" ] && pip install -r "$i/requirements.txt"
+        pip install -e "$i"
+    fi
+done
+
 # Run the prerun script to init CKAN and create the default admin user
 python3 prerun.py
 

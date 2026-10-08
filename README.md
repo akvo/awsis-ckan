@@ -23,9 +23,9 @@ cp .env.dev.example .env
 This file contains critical configurations, including database connections, plugins, and other essential environment variables.
 </details>
 <details>
-<summary>Generate DataPusher API Token</summary>
+<summary>Generate DataPusher+ API Token</summary>
 
-After the first run, you need to generate an API token for DataPusher to enable uploading data to the DataStore.
+After the first run, generate an API token for DataPusher+ so it can load uploaded files into the DataStore. The token must belong to a **sysadmin** user.
 
 **For Development:**
 ```bash
@@ -51,16 +51,16 @@ Copy the token and update `CKAN__DATAPUSHER__API_TOKEN` in your `.env` file:
 CKAN__DATAPUSHER__API_TOKEN=<your_generated_token>
 ```
 
-Then restart the containers:
+Then recreate the CKAN container so it picks up the new `.env` value (`restart` does not re-read `.env`):
 
 **For Development:**
 ```bash
-docker compose -f docker-compose.dev.yml restart ckan-dev
+docker compose -f docker-compose.dev.yml up -d ckan-dev
 ```
 
 **For Production:**
 ```bash
-docker compose restart ckan
+docker compose up -d ckan
 ```
 
 </details>
@@ -189,6 +189,51 @@ If you need to restart the application after making changes or updates, use the 
 docker compose restart
 ```
 This command will gracefully restart all running services while maintaining their configurations.
+</details>
+<details>
+<summary>Smoke Test</summary>
+
+`scripts/smoke-test.sh` checks the qsv and DataPusher+ versions, that every plugin in `CKAN__PLUGINS` is loaded, that the main pages render, and that a CSV is loaded into the DataStore and can be resubmitted. It needs `curl` and `jq` on the host and a sysadmin API token:
+
+```bash
+# Development
+CKAN_API_TOKEN=<token> scripts/smoke-test.sh
+
+# Production
+CKAN_API_TOKEN=<token> COMPOSE="docker compose" SERVICE=ckan CKAN_URL=https://<site> scripts/smoke-test.sh
+```
+
+It creates a `smoke-test-org` organization and purges the test dataset at the end.
+</details>
+<details>
+<summary>Upgrading (DataPusher+ 3.0 / CKAN 2.11.6)</summary>
+
+Pushing to `main` deploys to the test server. Before merging:
+
+1. Back up the databases:
+   ```bash
+   docker compose exec -T db pg_dump -U postgres -Fc ckandb > ckandb.dump
+   docker compose exec -T db pg_dump -U postgres -Fc datastore > datastore.dump
+   ```
+2. Update the server `.env` to match `.env.example`:
+   - `SOLR_IMAGE_VERSION=2.11-solr9-spatial`, `REDIS_VERSION=7`, `CKAN_VERSION=2.11.6`
+   - `CKAN__DATAPUSHER__FORMATS` (now includes `ods zip`)
+   - Keep `CKAN__DATAPUSHER__CALLBACK_URL_BASE=http://ckan:5000` and `CKAN__DATAPUSHER__API_TOKEN` (sysadmin token)
+   - `DATAPUSHER_VERSION` and `CKAN_DATAPUSHER_URL` can be removed
+3. After the deploy, remove the old volume, which is no longer mounted (check the name with `docker volume ls`): `docker volume rm <project>_site_packages`
+4. Rebuild the search index: `docker compose exec ckan ckan search-index rebuild`. If Solr fails to start with the new image, remove the `solr_data` volume (the index is rebuilt from the database) and run the rebuild again.
+5. Run the smoke test against the server.
+6. **Check date columns before reloading.** DP+ 3.0 only infers dates for columns whose names contain `date`, `time`, `due`, `open`, `close` or `created`. Reloading re-creates every DataStore table, so date columns with other names (e.g. `measured_on`) turn into text. List the current date/timestamp columns:
+   ```bash
+   docker compose exec -T db psql -U postgres -d datastore -c \
+     "SELECT table_name, column_name, data_type FROM information_schema.columns
+      WHERE table_schema = 'public' AND data_type IN ('date', 'timestamp without time zone')
+      ORDER BY 1, 2;"
+   ```
+   If any of those names don't match the list, set `CKANEXT__DATAPUSHER_PLUS__QSV_DATES_WHITELIST` in `.env` (comma-separated name fragments, or `all` to scan every column, which is slower on large files) and recreate the container: `docker compose up -d ckan`.
+7. Reload existing resources into the DataStore with DP+ 3.0: `docker compose exec ckan ckan datapusher-plus resubmit --yes`
+
+DP+ caches its settings when CKAN starts, before env vars are applied. That is why `ckan/docker-entrypoint.d/02_setup_datapusher_plus.sh` writes the DP+ settings we use into `ckan.ini`. A new `CKANEXT__DATAPUSHER_PLUS__*` env var only takes effect if it is added to that script too.
 </details>
 
 Copying and License

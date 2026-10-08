@@ -3,7 +3,6 @@ volumes:
   pg_data:
   solr_data:
   pip_cache:
-  site_packages:
   vscode_server:
   pg-admin-data:
 
@@ -26,7 +25,6 @@ services:
       - ckan_storage:/var/lib/ckan
       - ./src:/srv/app/src_extensions
       - pip_cache:/root/.cache/pip
-      - site_packages:/usr/lib/python3.10/site-packages
       - vscode_server:/root/.vscode-server
     restart: unless-stopped
     healthcheck:
@@ -56,13 +54,13 @@ services:
         ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
 
   pgadmin:
-    image: dpage/pgadmin4:5.7
+    image: dpage/pgadmin4:9
     environment:
       - PGADMIN_LISTEN_PORT=5050
       - PGADMIN_DEFAULT_EMAIL=dev@akvo.org
       - PGADMIN_DEFAULT_PASSWORD=password
     volumes:
-      - ./pgadmin4/servers.json:/pgadmin4/servers.json
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
       - pg-admin-data:/var/lib/pgadmin
     depends_on:
       - db

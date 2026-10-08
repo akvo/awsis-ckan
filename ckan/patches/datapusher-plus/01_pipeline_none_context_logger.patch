@@ -1,0 +1,21 @@
+From fb6e6c4af5bd051a0d8564d69089cafb8d8c543c Mon Sep 17 00:00:00 2001
+From: Patricio Del Boca <patriciodelboca@gmail.com>
+Date: Wed, 18 Feb 2026 12:30:52 +0100
+Subject: [PATCH] Do not call logger on None object.
+
+---
+ ckanext/datapusher_plus/jobs/pipeline.py | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/ckanext/datapusher_plus/jobs/pipeline.py b/ckanext/datapusher_plus/jobs/pipeline.py
+index 41d3e527..7c90fdd6 100644
+--- a/ckanext/datapusher_plus/jobs/pipeline.py
++++ b/ckanext/datapusher_plus/jobs/pipeline.py
+@@ -288,7 +288,6 @@ def execute(self, context: ProcessingContext) -> Optional[ProcessingContext]:
+ 
+                 # If stage returns None, stop pipeline
+                 if context is None:
+-                    context.logger.info(f"Pipeline stopped after stage: {stage.name}")
+                     return None
+ 
+             except utils.JobError:

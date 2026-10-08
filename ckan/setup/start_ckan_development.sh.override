@@ -39,7 +39,7 @@ do
         if [ -f $i/setup.py ];
         then
             cd $i
-            python3 $i/setup.py develop
+            pip install -e .
             echo "Found setup.py file in $i"
             cd $APP_DIR
         fi
