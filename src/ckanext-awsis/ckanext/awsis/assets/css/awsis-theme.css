@@ -1619,6 +1619,80 @@ a.btn-info:active {
   z-index: 2;
 }
 
+/* Reorder resources (dataset Edit > Reorder resources). CKAN core pulls the
+   list out by -10px and hangs the drag handle at left: -31px, which assumes
+   Bootstrap's module padding. The theme's .module-content has no horizontal
+   padding, so the list overlapped the help text and the handle sat on the
+   sidebar edge. Keep the list in the column and put the handle in the card. */
+.module-content > h1:has(+ p + .resource-list.reordering) {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--awsis-dark);
+  margin: 0 0 0.5rem;
+}
+
+.module-content > h1:has(+ p + .resource-list.reordering) + p {
+  color: var(--awsis-gray-600);
+  font-size: var(--text-sm);
+  margin: 0 0 1.5rem;
+}
+
+.resource-list.reordering {
+  margin: 0 0 1.5rem;
+}
+
+.resource-list.reordering .resource-item {
+  border: 1px solid var(--awsis-gray-200);
+  border-radius: 0;
+  background: var(--awsis-white);
+  padding: 1rem 4rem 1rem 60px;
+  margin-bottom: 0.75rem;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.resource-list.reordering .resource-item .format-label {
+  top: 1rem;
+}
+
+.resource-list.reordering .resource-item:hover {
+  background: var(--awsis-white);
+  border-color: var(--awsis-primary);
+}
+
+.resource-list.reordering .resource-item .handle {
+  left: auto;
+  right: 1rem;
+  margin-top: -18px;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--awsis-gray-100);
+  color: var(--awsis-gray-600);
+}
+
+.resource-list.reordering .resource-item:hover .handle {
+  background: var(--awsis-primary);
+  color: var(--awsis-white);
+}
+
+.resource-list.reordering .resource-item.ui-sortable-helper {
+  border-color: var(--awsis-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.resource-list.reordering .resource-item.ui-sortable-helper .handle {
+  background: var(--awsis-primary);
+  border: none;
+  color: var(--awsis-white);
+}
+
+.resource-list.reordering + .form-actions {
+  justify-content: flex-end;
+}
+
 /* Accordion styles */
 .accordion {
   border: 1px solid var(--awsis-gray-200);
@@ -1974,6 +2048,221 @@ a.btn-info:active {
   border-bottom: none;
 }
 
+/* ============================================
+   Context Info Box (sidebar summary on dataset, resource, organization,
+   group and user pages)
+   ============================================ */
+
+/* CKAN core's defaults (uppercase letter-spaced title, dotted rules, 30px
+   numbers, break-all descriptions) clash with the theme. */
+.context-info .module-content {
+  padding: 1.25rem 1rem;
+}
+
+.context-info .image {
+  margin-bottom: 1rem;
+}
+
+.context-info .image a,
+.context-info .image img {
+  border-radius: 0;
+}
+
+.context-info .image img:not(.user-image) {
+  height: 140px;
+  object-fit: contain;
+  background: var(--awsis-gray-50);
+  border: 1px solid var(--awsis-gray-100);
+}
+
+.context-info .image .user-image {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--awsis-gray-200);
+}
+
+.context-info h1.heading {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: 1.35;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--awsis-dark);
+  margin: 0 0 0.5rem;
+}
+
+.context-info .description,
+.context-info .empty {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--awsis-gray-600);
+  word-break: normal;
+  overflow-wrap: break-word;
+  text-align: left;
+  padding: 0;
+  margin: 0 0 0.5rem;
+}
+
+.context-info .read-more {
+  margin: 0;
+}
+
+.context-info .module-content .read-more a {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--awsis-primary);
+  text-decoration: none;
+}
+
+.context-info .module-content .read-more a:hover {
+  text-decoration: underline;
+}
+
+.context-info hr {
+  border-color: var(--awsis-gray-100);
+  opacity: 1;
+  margin: 1rem 0;
+}
+
+/* Stats: small tiles, two per row; an odd last tile takes the full row */
+.context-info .nums {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  border-top: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.context-info .nums dl {
+  display: flex;
+  flex-direction: column-reverse;
+  float: none;
+  margin: 0;
+  padding: 0.625rem 0.75rem;
+  background: var(--awsis-gray-50);
+  border: 1px solid var(--awsis-gray-100);
+}
+
+.context-info .nums dl:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.context-info .nums dl dt {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--awsis-gray-500);
+  overflow-wrap: anywhere;
+}
+
+.context-info .nums dl dd {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--awsis-dark);
+  margin: 0 0 0.125rem;
+}
+
+/* Key/value details (user profile) */
+.context-info .info {
+  border-top: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.context-info .info dl {
+  margin: 0;
+  padding: 0.625rem 0;
+  border-top: 1px solid var(--awsis-gray-100);
+}
+
+.context-info .info dl dt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--awsis-gray-500);
+}
+
+.context-info .info dl dd {
+  font-size: var(--text-sm);
+  color: var(--awsis-gray-800);
+  margin: 0.125rem 0 0;
+  overflow-wrap: anywhere;
+}
+
+.context-info .info .label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 0.125rem 0.375rem;
+  background: var(--awsis-gray-100);
+  color: var(--awsis-gray-600);
+}
+
+.context-info .module-content > .btn,
+.context-info .module-content > form .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+/* Organization tree from ckanext-hierarchy (sidebar and About pages). Its
+   stylesheet adds a disc bullet and a grey text-shadow on the current node. */
+body ul.hierarchy-tree-top {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* With no parent or sub-organizations the tree is just the current org,
+   repeating the heading right above it, so hide it. The tree carries its own
+   divider instead of the <hr> before it, so that goes away with it. */
+body ul.hierarchy-tree-top:has(> li:only-child):not(:has(ul)) {
+  display: none;
+}
+
+hr:has(+ ul.hierarchy-tree-top) {
+  display: none;
+}
+
+.context-info ul.hierarchy-tree-top {
+  border-top: 1px solid var(--awsis-gray-100);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+body ul.hierarchy-tree-top li a,
+body ul.hierarchy-tree li a {
+  font-size: var(--text-sm);
+  color: var(--awsis-gray-700);
+  text-decoration: none;
+  text-shadow: none;
+}
+
+body ul.hierarchy-tree-top li.highlighted > a,
+body ul.hierarchy-tree-top li.highlighted > div.node-item a,
+body ul.hierarchy-tree li.highlighted > a,
+body ul.hierarchy-tree li.highlighted > div.node-item a {
+  font-weight: 600;
+  color: var(--awsis-primary);
+  text-shadow: none;
+}
+
 /* Resources section */
 .resources h2 {
   margin-bottom: 1rem;
@@ -2232,6 +2521,98 @@ a.btn-info:active {
   .awsis-org-cta {
     padding: 3rem 0;
   }
+}
+
+/* ============================================
+   Dashboard - My Organizations / My Groups cards
+   ============================================ */
+
+.awsis-dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.awsis-dash-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--awsis-white);
+  border: 1px solid var(--awsis-gray-200);
+  text-decoration: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.awsis-dash-card:hover {
+  border-color: var(--awsis-primary);
+  box-shadow: 0 8px 24px rgba(3, 173, 140, 0.12);
+  text-decoration: none;
+}
+
+.awsis-dash-card-thumb {
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--awsis-gray-100);
+  color: var(--awsis-gray-400);
+}
+
+.awsis-dash-card-thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.awsis-dash-card-thumb svg {
+  width: 28px;
+  height: 28px;
+}
+
+.awsis-dash-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.awsis-dash-card-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--awsis-dark);
+  margin: 0 0 0.25rem;
+}
+
+.awsis-dash-card:hover .awsis-dash-card-title {
+  color: var(--awsis-primary);
+}
+
+.awsis-dash-card-description {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--awsis-gray-600);
+  margin: 0 0 0.75rem;
+}
+
+.awsis-dash-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  font-size: var(--text-xs);
+  color: var(--awsis-gray-500);
+}
+
+.awsis-dash-card-role {
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 0.125rem 0.5rem;
+  background: rgba(3, 173, 140, 0.1);
+  color: var(--awsis-primary-dark);
 }
 
 /* Dataset resource badges */
