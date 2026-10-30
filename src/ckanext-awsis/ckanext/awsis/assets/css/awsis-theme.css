@@ -1940,6 +1940,15 @@ a.btn-info:active {
 /* Item label and count */
 .filters .nav-facet .item-label {
   flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+  margin-right: 0.5rem;
+}
+
+.filters .nav-facet .item-count.badge,
+.filters .nav-facet .facet-close {
+  flex-shrink: 0;
 }
 
 .filters .nav-facet .hidden.separator,

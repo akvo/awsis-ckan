@@ -1,0 +1,18 @@
+{% ckan_extends %}
+
+{% block package_basic_fields_description %}
+  {{ super() }}
+  {% set selected_types = data.type_of_resource or [] %}
+  {% if selected_types is string %}{% set selected_types = [selected_types] %}{% endif %}
+  <div class="form-group control-medium">
+    <label class="form-label" for="field-type-of-resource">{{ _('Type of Resource') }}</label>
+    <div class="controls">
+      <select id="field-type-of-resource" name="type_of_resource" data-module="autocomplete" multiple="multiple" placeholder="{{ _('Please Select') }}">
+        {% for option in h.awsis_type_of_resource_options() %}
+          <option value="{{ option }}" {% if option in selected_types %}selected="selected"{% endif %}>{{ option }}</option>
+        {% endfor %}
+      </select>
+      {% if errors.type_of_resource %}<span class="error-block">{{ errors.type_of_resource|join(', ') }}</span>{% endif %}
+    </div>
+  </div>
+{% endblock %}
