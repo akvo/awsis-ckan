@@ -1,0 +1,11 @@
+{% ckan_extends %}
+
+{% block extras %}
+  {% if pkg_dict.type_of_resource %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _('Type of Resource') }}</th>
+      <td class="dataset-details">{{ pkg_dict.type_of_resource|join(', ') }}</td>
+    </tr>
+  {% endif %}
+  {{ super() }}
+{% endblock %}
