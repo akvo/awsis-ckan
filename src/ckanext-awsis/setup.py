@@ -1,10 +1,16 @@
-from setuptools import setup, find_namespace_packages
+from setuptools import find_namespace_packages, setup
 
 setup(
     name='ckanext-awsis',
     version='1.0.0',
-    description='AWSIS (Akvo Water Security Information System) theme for CKAN',
-    long_description='A sophisticated CKAN theme extension for the AWSIS project focusing on water management in the Sundarbans region.',
+    description=(
+        'AWSIS (Alliance for Water Security in the Indian Sundarbans) '
+        'theme for CKAN'
+    ),
+    long_description=(
+        'A sophisticated CKAN theme extension for the AWSIS project '
+        'focusing on water management in the Sundarbans region.'
+    ),
     author='Akvo',
     author_email='tech.consultancy@akvo.org',
     license='AGPL-3.0',

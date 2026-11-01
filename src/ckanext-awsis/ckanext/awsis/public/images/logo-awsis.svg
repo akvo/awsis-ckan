@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 60" width="260" height="60">
   <defs>
     <linearGradient id="waterGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#03AD8C"/>
@@ -10,5 +10,5 @@
     <circle cx="20" cy="15" r="8" opacity="0.8"/>
   </g>
   <text x="45" y="38" font-family="Plus Jakarta Sans, sans-serif" font-size="28" font-weight="700" fill="#1A3A3A">AWSIS</text>
-  <text x="45" y="52" font-family="Inter, sans-serif" font-size="9" fill="#718096">Water Security Information System</text>
+  <text x="45" y="52" font-family="Inter, sans-serif" font-size="9" fill="#718096">Alliance for Water Security in the Indian Sundarbans</text>
 </svg>

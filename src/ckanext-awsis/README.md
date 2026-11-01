@@ -1,6 +1,7 @@
 # ckanext-awsis
 
-AWSIS (Akvo Water Security Information System) theme extension for CKAN.
+AWSIS (Alliance for Water Security in the Indian Sundarbans) theme extension
+for CKAN.
 
 ## Overview
 

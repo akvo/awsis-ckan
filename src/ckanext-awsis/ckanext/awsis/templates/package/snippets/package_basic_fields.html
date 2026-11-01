@@ -1,0 +1,42 @@
+{% ckan_extends %}
+
+{% block package_basic_fields_description %}
+  {{ super() }}
+  {% set selected_types = data.type_of_resource or [] %}
+  {% if selected_types is string %}{% set selected_types = [selected_types] %}{% endif %}
+  <div class="form-group control-medium">
+    <label class="form-label" for="field-type-of-resource"><span title="{{ _('This field is required') }}" class="control-required">*</span> {{ _('Type of Resource') }}</label>
+    <div class="controls">
+      <select id="field-type-of-resource" name="type_of_resource" data-module="autocomplete" data-module-container-class="awsis-select-list" multiple="multiple" placeholder="{{ _('Please Select') }}">
+        {% for option in h.awsis_type_of_resource_options() %}
+          <option value="{{ option }}" {% if option in selected_types %}selected="selected"{% endif %}>{{ option }}</option>
+        {% endfor %}
+      </select>
+      {% if errors.type_of_resource %}<span class="error-block">{{ errors.type_of_resource|join(', ') }}</span>{% endif %}
+    </div>
+  </div>
+
+  {# Year of Publication: this year preselected on new datasets #}
+  {% set selected_year = data.year_of_publication|string if data.year_of_publication else '' %}
+  {% if form_style != 'edit' and 'year_of_publication' not in data %}{% set selected_year = h.awsis_current_year() %}{% endif %}
+  <div class="form-group control-medium">
+    <label class="form-label" for="field-year-of-publication">{{ _('Year of Publication') }}</label>
+    <div class="controls">
+      <select id="field-year-of-publication" name="year_of_publication" data-module="autocomplete">
+        <option value="">{{ _('Not specified') }}</option>
+        {% for year in h.awsis_year_of_publication_options() %}
+          <option value="{{ year }}" {% if year == selected_year %}selected="selected"{% endif %}>{{ year }}</option>
+        {% endfor %}
+      </select>
+      {% if errors.year_of_publication %}<span class="error-block">{{ errors.year_of_publication|join(', ') }}</span>{% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{# Preselect the AWSIS default license on new datasets only #}
+{% block package_basic_fields_license %}
+  {% if form_style != 'edit' and not data.get('license_id') %}
+    {% do data.update({'license_id': h.awsis_default_license_id()}) %}
+  {% endif %}
+  {{ super() }}
+{% endblock %}
