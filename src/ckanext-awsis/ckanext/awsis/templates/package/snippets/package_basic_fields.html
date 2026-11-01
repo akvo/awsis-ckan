@@ -15,6 +15,22 @@
       {% if errors.type_of_resource %}<span class="error-block">{{ errors.type_of_resource|join(', ') }}</span>{% endif %}
     </div>
   </div>
+
+  {# Year of Publication: this year preselected on new datasets #}
+  {% set selected_year = data.year_of_publication|string if data.year_of_publication else '' %}
+  {% if form_style != 'edit' and 'year_of_publication' not in data %}{% set selected_year = h.awsis_current_year() %}{% endif %}
+  <div class="form-group control-medium">
+    <label class="form-label" for="field-year-of-publication">{{ _('Year of Publication') }}</label>
+    <div class="controls">
+      <select id="field-year-of-publication" name="year_of_publication" data-module="autocomplete">
+        <option value="">{{ _('Not specified') }}</option>
+        {% for year in h.awsis_year_of_publication_options() %}
+          <option value="{{ year }}" {% if year == selected_year %}selected="selected"{% endif %}>{{ year }}</option>
+        {% endfor %}
+      </select>
+      {% if errors.year_of_publication %}<span class="error-block">{{ errors.year_of_publication|join(', ') }}</span>{% endif %}
+    </div>
+  </div>
 {% endblock %}
 
 {# Preselect the AWSIS default license on new datasets only #}

@@ -14,3 +14,7 @@ HIDDEN_FIELDS = {
 # License preselected on the new dataset form (an id from license_list).
 # Existing datasets keep whatever license they already have.
 DEFAULT_LICENSE_ID = 'other-pd'  # Other (Public Domain)
+
+# Year of Publication dropdown runs from the current year back to this year;
+# the validator rejects anything outside that range.
+YEAR_OF_PUBLICATION_MIN = 1960

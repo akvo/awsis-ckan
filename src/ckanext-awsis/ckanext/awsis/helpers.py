@@ -1,9 +1,14 @@
 """Template helper functions for AWSIS theme."""
 
+import datetime
 import logging
 from ckan.plugins import toolkit
 
-from ckanext.awsis.dataset_form import DEFAULT_LICENSE_ID, HIDDEN_FIELDS
+from ckanext.awsis.dataset_form import (
+    DEFAULT_LICENSE_ID,
+    HIDDEN_FIELDS,
+    YEAR_OF_PUBLICATION_MIN,
+)
 from ckanext.awsis.vocabularies import TYPE_OF_RESOURCE, type_of_resource_list
 
 log = logging.getLogger(__name__)
@@ -199,3 +204,14 @@ def hide_dataset_field(name):
 def default_license_id():
     """License id preselected on the new dataset form."""
     return DEFAULT_LICENSE_ID
+
+
+def year_of_publication_options():
+    """Years for the Year of Publication dropdown, newest first."""
+    current_year = datetime.date.today().year
+    return [str(y) for y in range(current_year, YEAR_OF_PUBLICATION_MIN - 1, -1)]
+
+
+def current_year():
+    """This year as a string, preselected on new datasets."""
+    return str(datetime.date.today().year)
