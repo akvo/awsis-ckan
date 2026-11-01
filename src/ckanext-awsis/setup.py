@@ -4,7 +4,8 @@ setup(
     name='ckanext-awsis',
     version='1.0.0',
     description=(
-        'AWSIS (Akvo Water Security Information System) theme for CKAN'
+        'AWSIS (Alliance for Water Security in the Indian Sundarbans) '
+        'theme for CKAN'
     ),
     long_description=(
         'A sophisticated CKAN theme extension for the AWSIS project '
