@@ -51,8 +51,9 @@ class AwsisPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             'awsis_get_resource_types': helpers.get_resource_types,
             'awsis_hide_dataset_field': helpers.hide_dataset_field,
             'awsis_default_license_id': helpers.default_license_id,
-            'awsis_year_of_publication_options':
-                helpers.year_of_publication_options,
+            'awsis_year_of_publication_options': (
+                helpers.year_of_publication_options
+            ),
             'awsis_current_year': helpers.current_year,
             'awsis_type_of_resource_options': lambda: type_of_resource_list,
         }
@@ -68,8 +69,9 @@ class AwsisPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def dataset_facets(self, facets_dict, package_type):
         return self._add_facets(facets_dict)
 
-    def organization_facets(self, facets_dict, organization_type,
-                            package_type):
+    def organization_facets(
+        self, facets_dict, organization_type, package_type
+    ):
         return self._add_facets(facets_dict)
 
     def group_facets(self, facets_dict, group_type, package_type):
@@ -98,18 +100,21 @@ class AwsisPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         return ['dataset']
 
     def _modify_package_schema(self, schema):
-        schema.update({
-            TYPE_OF_RESOURCE: [
-                toolkit.get_validator('not_empty'),
-                toolkit.get_converter('convert_to_tags')(TYPE_OF_RESOURCE),
-            ],
-            YEAR_OF_PUBLICATION: [
-                # ignore_empty (not ignore_missing) so "Not specified" clears it
-                toolkit.get_validator('ignore_empty'),
-                toolkit.get_validator('awsis_year_of_publication'),
-                toolkit.get_converter('convert_to_extras'),
-            ],
-        })
+        schema.update(
+            {
+                TYPE_OF_RESOURCE: [
+                    toolkit.get_validator('not_empty'),
+                    toolkit.get_converter('convert_to_tags')(TYPE_OF_RESOURCE),
+                ],
+                YEAR_OF_PUBLICATION: [
+                    # ignore_empty (not ignore_missing): "Not specified"
+                    # clears the year
+                    toolkit.get_validator('ignore_empty'),
+                    toolkit.get_validator('awsis_year_of_publication'),
+                    toolkit.get_converter('convert_to_extras'),
+                ],
+            }
+        )
         return schema
 
     def create_package_schema(self):
@@ -126,14 +131,18 @@ class AwsisPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         schema['tags']['__extras'].append(
             toolkit.get_converter('free_tags_only')
         )
-        schema.update({
-            TYPE_OF_RESOURCE: [
-                toolkit.get_converter('convert_from_tags')(TYPE_OF_RESOURCE),
-                toolkit.get_validator('ignore_missing'),
-            ],
-            YEAR_OF_PUBLICATION: [
-                toolkit.get_converter('convert_from_extras'),
-                toolkit.get_validator('ignore_missing'),
-            ],
-        })
+        schema.update(
+            {
+                TYPE_OF_RESOURCE: [
+                    toolkit.get_converter('convert_from_tags')(
+                        TYPE_OF_RESOURCE
+                    ),
+                    toolkit.get_validator('ignore_missing'),
+                ],
+                YEAR_OF_PUBLICATION: [
+                    toolkit.get_converter('convert_from_extras'),
+                    toolkit.get_validator('ignore_missing'),
+                ],
+            }
+        )
         return schema

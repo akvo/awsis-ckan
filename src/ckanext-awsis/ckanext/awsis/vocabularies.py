@@ -1,6 +1,7 @@
 """Controlled tag vocabularies used as dataset categories."""
 
 import logging
+
 from ckan.plugins import toolkit
 
 log = logging.getLogger(__name__)
@@ -30,7 +31,9 @@ def create_vocabularies():
     context = {'user': user['name']}
     for name, tags in VOCABULARIES.items():
         try:
-            vocab = toolkit.get_action('vocabulary_show')(context, {'id': name})
+            vocab = toolkit.get_action('vocabulary_show')(
+                context, {'id': name}
+            )
         except toolkit.ObjectNotFound:
             vocab = toolkit.get_action('vocabulary_create')(
                 context, {'name': name}

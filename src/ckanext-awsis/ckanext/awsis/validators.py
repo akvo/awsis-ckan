@@ -22,7 +22,8 @@ def year_of_publication(value):
         YEAR_OF_PUBLICATION_MIN <= int(value) <= max_year
     ):
         raise toolkit.Invalid(
-            toolkit._('Year must be a 4-digit year between {min} and {max}')
-            .format(min=YEAR_OF_PUBLICATION_MIN, max=max_year)
+            toolkit._(
+                'Year must be a 4-digit year between {min} and {max}'
+            ).format(min=YEAR_OF_PUBLICATION_MIN, max=max_year)
         )
     return value
