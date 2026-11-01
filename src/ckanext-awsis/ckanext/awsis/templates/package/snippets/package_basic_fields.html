@@ -5,9 +5,9 @@
   {% set selected_types = data.type_of_resource or [] %}
   {% if selected_types is string %}{% set selected_types = [selected_types] %}{% endif %}
   <div class="form-group control-medium">
-    <label class="form-label" for="field-type-of-resource">{{ _('Type of Resource') }}</label>
+    <label class="form-label" for="field-type-of-resource"><span title="{{ _('This field is required') }}" class="control-required">*</span> {{ _('Type of Resource') }}</label>
     <div class="controls">
-      <select id="field-type-of-resource" name="type_of_resource" data-module="autocomplete" multiple="multiple" placeholder="{{ _('Please Select') }}">
+      <select id="field-type-of-resource" name="type_of_resource" data-module="autocomplete" data-module-container-class="awsis-select-list" multiple="multiple" placeholder="{{ _('Please Select') }}">
         {% for option in h.awsis_type_of_resource_options() %}
           <option value="{{ option }}" {% if option in selected_types %}selected="selected"{% endif %}>{{ option }}</option>
         {% endfor %}
@@ -15,4 +15,12 @@
       {% if errors.type_of_resource %}<span class="error-block">{{ errors.type_of_resource|join(', ') }}</span>{% endif %}
     </div>
   </div>
+{% endblock %}
+
+{# Preselect the AWSIS default license on new datasets only #}
+{% block package_basic_fields_license %}
+  {% if form_style != 'edit' and not data.get('license_id') %}
+    {% do data.update({'license_id': h.awsis_default_license_id()}) %}
+  {% endif %}
+  {{ super() }}
 {% endblock %}

@@ -1,0 +1,31 @@
+{% ckan_extends %}
+
+{#
+  Fields hidden in dataset_form.HIDDEN_FIELDS are still posted as
+  hidden inputs so saving the form doesn't wipe values already stored.
+#}
+
+{% block package_metadata_fields_url %}
+  {{ form.input('url', label=_('Source'), id='field-url', placeholder=_('e.g. https://www.university.edu'), value=data.url, error=errors.url, classes=['control-medium']) }}
+{% endblock %}
+
+{% block package_metadata_fields_maintainer %}
+  {% if h.awsis_hide_dataset_field('maintainer') %}
+    {% if data.maintainer %}<input type="hidden" name="maintainer" value="{{ data.maintainer }}" />{% endif %}
+    {% if data.maintainer_email %}<input type="hidden" name="maintainer_email" value="{{ data.maintainer_email }}" />{% endif %}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block custom_fields %}
+  {% if h.awsis_hide_dataset_field('custom_fields') %}
+    {% for extra in data.extras or [] %}
+      {% set prefix = 'extras__%d__' % loop.index0 %}
+      <input type="hidden" name="{{ prefix }}key" value="{{ extra.key }}" />
+      <input type="hidden" name="{{ prefix }}value" value="{{ extra.value }}" />
+    {% endfor %}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}

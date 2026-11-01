@@ -44,6 +44,9 @@ class AwsisPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             'awsis_get_featured_datasets': helpers.get_featured_datasets,
             'awsis_get_thematic_areas': helpers.get_thematic_areas,
             'awsis_get_recent_datasets': helpers.get_recent_datasets,
+            'awsis_get_resource_types': helpers.get_resource_types,
+            'awsis_hide_dataset_field': helpers.hide_dataset_field,
+            'awsis_default_license_id': helpers.default_license_id,
             'awsis_type_of_resource_options': lambda: type_of_resource_list,
         }
 
@@ -74,7 +77,7 @@ class AwsisPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def _modify_package_schema(self, schema):
         schema.update({
             TYPE_OF_RESOURCE: [
-                toolkit.get_validator('ignore_missing'),
+                toolkit.get_validator('not_empty'),
                 toolkit.get_converter('convert_to_tags')(TYPE_OF_RESOURCE),
             ],
         })

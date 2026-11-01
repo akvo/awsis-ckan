@@ -631,6 +631,27 @@ a:hover {
   color: var(--awsis-primary-dark);
 }
 
+/* Type of Resource: tinted to separate it from Thematic Areas; five cards
+   wrap 3 + 2 and centre instead of leaving one orphan on a 4-column row */
+.awsis-resource-types {
+  background: var(--awsis-gray-50);
+}
+
+.awsis-resource-types .awsis-themes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.awsis-resource-types .awsis-theme-card {
+  flex: 0 1 calc((100% - 4rem) / 3);
+  min-width: 260px;
+}
+
+.awsis-resource-types .awsis-theme-card-icon {
+  background: var(--awsis-white);
+}
+
 /* ============================================
    Featured Datasets Section
    ============================================ */
@@ -1088,7 +1109,6 @@ main.main,
 select.form-control {
   border-radius: 0;
   border: 1px solid var(--awsis-gray-300);
-  padding: 0.5rem 1rem;
   font-size: 0.875rem;
   background-color: var(--awsis-white);
 }
@@ -1353,6 +1373,121 @@ a.btn-success:active {
 .form-control:focus {
   border-color: var(--awsis-primary);
   box-shadow: 0 0 0 2px rgba(3, 173, 140, 0.1);
+}
+
+/* Dropdowns: make select2 (single + multi) and native selects match
+   .form-control inputs - same height, border, font and focus ring */
+.select2-container .select2-choice,
+.select2-container-multi .select2-choices,
+select.form-control {
+  min-height: calc(1.5em + 0.75rem + 2px);
+  border: 1px solid var(--awsis-gray-300);
+  border-radius: 0;
+  background: var(--awsis-white);
+  box-shadow: none;
+  font-size: 0.875rem;
+  color: var(--awsis-dark);
+}
+
+.select2-container .select2-choice {
+  height: auto;
+  line-height: 1.5;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+}
+
+.select2-container .select2-choice > .select2-chosen {
+  margin-right: 0;
+}
+
+/* Shared chevron in place of select2's sprite arrow and the native one.
+   The chevron sits on .select2-arrow and its <b> is hidden: select2's HiDPI
+   rule forces its sprite onto that <b> with !important */
+div.select2-container .select2-choice .select2-arrow {
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  width: 2.25rem;
+}
+
+div.select2-container .select2-choice .select2-arrow b {
+  display: none;
+}
+
+div.select2-container .select2-choice .select2-arrow,
+select.form-control {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23718096' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 12px 12px;
+}
+
+/* Fixed-list multi-selects (e.g. Type of Resource) get the chevron too;
+   free-text ones like Tags stay plain inputs */
+.select2-container-multi.awsis-select-list .select2-choices {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23718096' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 12px 12px;
+  padding-right: 2.25rem;
+  cursor: pointer;
+}
+
+select.form-control {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+}
+
+.select2-container .select2-choice abbr {
+  top: 50%;
+  transform: translateY(-50%);
+  right: 2.25rem;
+}
+
+.select2-container-multi .select2-choices {
+  padding: 0.0625rem 0.375rem;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input {
+  padding: 0.25rem 0.375rem;
+  margin: 0;
+  font-size: 0.875rem;
+  font-family: inherit;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice {
+  margin: 0.1875rem 0.25rem 0.1875rem 0;
+  border: 1px solid var(--awsis-gray-300);
+  border-radius: 0;
+  background: var(--awsis-gray-100);
+  box-shadow: none;
+  color: var(--awsis-dark);
+  font-size: 0.8125rem;
+}
+
+/* select2 pins the remove "x" 4px from the top, sized for its 13px tags */
+.select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.select2-container-active .select2-choice,
+.select2-container-active .select2-choices,
+.select2-dropdown-open .select2-choice {
+  border-color: var(--awsis-primary);
+  box-shadow: 0 0 0 2px rgba(3, 173, 140, 0.1);
+  background: var(--awsis-white);
+}
+
+.select2-drop,
+.select2-drop-active {
+  border-color: var(--awsis-primary);
+  border-radius: 0;
+  font-size: 0.875rem;
+}
+
+.select2-results .select2-highlighted {
+  background: var(--awsis-primary);
 }
 
 /* Login/Register pages */
